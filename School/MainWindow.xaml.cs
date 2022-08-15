@@ -101,6 +101,9 @@ namespace School
 
                     break;
 
+                    //Delete selected student
+                case Key.Delete:
+                    break;
                 default:
                     break;
             }
