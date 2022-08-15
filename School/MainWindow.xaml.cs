@@ -81,6 +81,9 @@ namespace School
                     //Task 5: Use the Visual Studio Debugger to step through the code
                     break;
 
+                case Key.Insert:
+                    break;
+
                 default:
                     break;
             }
