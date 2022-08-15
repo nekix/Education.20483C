@@ -107,8 +107,12 @@ namespace School
                     selectedStudent = studentsList.SelectedItem as Student;
 
                     //Display "MessageBox" to confirm the deletion
-                    MessageBox.Show($"Remove {selectedStudent.FirstName} {selectedStudent.LastName}?", "Prompt to confirm the deletion of a student record.", MessageBoxButton.YesNo);
-
+                    if(MessageBox.Show($"Remove {selectedStudent.FirstName} {selectedStudent.LastName}?", "Prompt to confirm the deletion of a student record.", MessageBoxButton.YesNo) is MessageBoxResult.Yes)
+                    {
+                        schoolContext.Students.DeleteObject(selectedStudent);
+                        saveChanges.IsEnabled = true;
+                    }
+                    
                     break;
 
                 default:
