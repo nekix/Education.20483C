@@ -61,12 +61,22 @@ namespace School
             {
                 //Init the "StudentForm" window
                 case Key.Enter:
-                    Student student = studentsList.SelectedItem as Student;
+                    Student selectedStudent = studentsList.SelectedItem as Student;
                     
                     StudentForm sf = new StudentForm { Title = "Edit Student Details" };
-                    sf.firstName.Text = student.FirstName;
-                    sf.lastName.Text = student.LastName;
-                    sf.dateOfBirth.Text = student.DateOfBirth.ToString("d");
+                    sf.firstName.Text = selectedStudent.FirstName;
+                    sf.lastName.Text = selectedStudent.LastName;
+                    sf.dateOfBirth.Text = selectedStudent.DateOfBirth.ToString("d");
+
+                    if (sf.ShowDialog() is true)
+                    {
+                        selectedStudent.FirstName = sf.firstName.Text;
+                        selectedStudent.LastName = sf.lastName.Text;
+                        selectedStudent.DateOfBirth = DateTime.Parse(sf.dateOfBirth.Text, CultureInfo.InvariantCulture);
+
+                        saveChanges.IsEnabled = true;
+                    }
+
                     break;
 
                 default:
