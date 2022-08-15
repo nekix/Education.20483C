@@ -7,6 +7,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using School.Data;
 using System.Globalization;
+using System.Data;
 
 namespace School
 {
@@ -142,7 +143,20 @@ namespace School
         public object Convert(object value, Type targetType, object parameter,
                               System.Globalization.CultureInfo culture)
         {
-            return "";
+            if (value is DateTime)
+            {
+                DateTime dateOfBirth = (DateTime)value;
+
+                TimeSpan diff = DateTime.Now.Subtract(dateOfBirth);
+
+                int ageInYears = (int)(diff.Days / 365.25);
+
+                return ageInYears.ToString();
+            }
+            else
+            {
+                return "";
+            }       
         }
 
         #region Predefined code
