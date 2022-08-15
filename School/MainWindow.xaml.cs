@@ -113,7 +113,6 @@ namespace School
                         saveChanges.IsEnabled = true;
                     }
 
-                    //Task 4: Run the application and verify that the delete functionality works as expected
                     break;
 
                 default:
