@@ -94,6 +94,10 @@ namespace School
                         newStudent.FirstName = sf.firstName.Text;
                         newStudent.LastName = sf.lastName.Text;
                         newStudent.DateOfBirth = DateTime.Parse(sf.dateOfBirth.Text, CultureInfo.InvariantCulture);
+
+                        teacher.Students.Add(newStudent);
+
+                        saveChanges.IsEnabled = true;
                     }
 
                     break;
