@@ -61,7 +61,7 @@ namespace School
 
             switch (e.Key)
             {
-                //Init the "StudentForm" window
+                //Edit selected student
                 case Key.Enter:
                     Student selectedStudent = studentsList.SelectedItem as Student;
 
@@ -83,8 +83,18 @@ namespace School
                     //Task 5: Use the Visual Studio Debugger to step through the code
                     break;
 
+                    //Add new student 
                 case Key.Insert:
+                    Student newStudent = new Student();
                     sf = new StudentForm { Title = $"New Student for Class {teacher.Class}" };
+
+                    //Display the StudentForm window
+                    if (sf.ShowDialog() is true)
+                    {
+                        newStudent.FirstName = sf.firstName.Text;
+                        newStudent.LastName = sf.lastName.Text;
+                        newStudent.DateOfBirth = DateTime.Parse(sf.dateOfBirth.Text, CultureInfo.InvariantCulture);
+                    }
 
                     break;
 
