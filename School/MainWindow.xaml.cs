@@ -58,12 +58,13 @@ namespace School
         private void studentsList_KeyDown(object sender, KeyEventArgs e)
         {
             StudentForm sf;
+            Student selectedStudent;
 
             switch (e.Key)
             {
                 //Edit selected student
                 case Key.Enter:
-                    Student selectedStudent = studentsList.SelectedItem as Student;
+                    selectedStudent = studentsList.SelectedItem as Student;
 
                     sf = new StudentForm { Title = "Edit Student Details" };
                     sf.firstName.Text = selectedStudent.FirstName;
@@ -103,7 +104,13 @@ namespace School
 
                     //Delete selected student
                 case Key.Delete:
+                    selectedStudent = studentsList.SelectedItem as Student;
+
+                    //Display "MessageBox" to confirm the deletion
+                    MessageBox.Show($"Remove {selectedStudent.FirstName} {selectedStudent.LastName}?", "Prompt to confirm the deletion of a student record.", MessageBoxButton.YesNo);
+
                     break;
+
                 default:
                     break;
             }
