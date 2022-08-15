@@ -137,6 +137,7 @@ namespace School
         #endregion
     }
 
+    //Convert date of birth to Age
     [ValueConversion(typeof(string), typeof(Decimal))]
     class AgeConverter : IValueConverter
     {
