@@ -7,6 +7,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using School.Data;
 using System.Globalization;
+using System.Data;
 
 namespace School
 {
@@ -57,12 +58,67 @@ namespace School
         // When the user presses a key, determine whether to add a new student to a class, remove a student from a class, or modify the details of a student
         private void studentsList_KeyDown(object sender, KeyEventArgs e)
         {
-            // TODO: Exercise 1: Task 1a: If the user pressed Enter, edit the details for the currently selected student
-            // TODO: Exercise 1: Task 2a: Use the StudentsForm to display and edit the details of the student
-            // TODO: Exercise 1: Task 2b: Set the title of the form and populate the fields on the form with the details of the student
-            // TODO: Exercise 1: Task 3a: Display the form
-            // TODO: Exercise 1: Task 3b: When the user closes the form, copy the details back to the student
-            // TODO: Exercise 1: Task 3c: Enable saving (changes are not made permanent until they are written back to the database)
+            StudentForm sf;
+            Student selectedStudent;
+
+            switch (e.Key)
+            {
+                //Edit selected student
+                case Key.Enter:
+                    selectedStudent = studentsList.SelectedItem as Student;
+
+                    sf = new StudentForm { Title = "Edit Student Details" };
+                    sf.firstName.Text = selectedStudent.FirstName;
+                    sf.lastName.Text = selectedStudent.LastName;
+                    sf.dateOfBirth.Text = selectedStudent.DateOfBirth.ToString("d");
+
+                    //Display the StudentForm window
+                    if (sf.ShowDialog() is true)
+                    {
+                        selectedStudent.FirstName = sf.firstName.Text;
+                        selectedStudent.LastName = sf.lastName.Text;
+                        selectedStudent.DateOfBirth = DateTime.Parse(sf.dateOfBirth.Text, CultureInfo.InvariantCulture);
+
+                        saveChanges.IsEnabled = true;
+                    }
+                 
+                    break;
+
+                    //Add new student 
+                case Key.Insert:
+                    Student newStudent = new Student();
+                    sf = new StudentForm { Title = $"New Student for Class {teacher.Class}" };
+
+                    //Display the StudentForm window
+                    if (sf.ShowDialog() is true)
+                    {
+                        newStudent.FirstName = sf.firstName.Text;
+                        newStudent.LastName = sf.lastName.Text;
+                        newStudent.DateOfBirth = DateTime.Parse(sf.dateOfBirth.Text, CultureInfo.InvariantCulture);
+
+                        teacher.Students.Add(newStudent);
+
+                        saveChanges.IsEnabled = true;
+                    }
+
+                    break;
+
+                    //Delete selected student
+                case Key.Delete:
+                    selectedStudent = studentsList.SelectedItem as Student;
+
+                    //Display "MessageBox" to confirm the deletion
+                    if(MessageBox.Show($"Remove {selectedStudent.FirstName} {selectedStudent.LastName}?", "Prompt to confirm the deletion of a student record.", MessageBoxButton.YesNo) is MessageBoxResult.Yes)
+                    {
+                        schoolContext.Students.DeleteObject(selectedStudent);
+                        saveChanges.IsEnabled = true;
+                    }
+
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         #region Predefined code
@@ -81,13 +137,27 @@ namespace School
         #endregion
     }
 
+    //Convert date of birth to Age
     [ValueConversion(typeof(string), typeof(Decimal))]
     class AgeConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter,
                               System.Globalization.CultureInfo culture)
         {
-            return "";
+            if (value is DateTime)
+            {
+                DateTime dateOfBirth = (DateTime)value;
+
+                TimeSpan diff = DateTime.Now.Subtract(dateOfBirth);
+
+                int ageInYears = (int)(diff.Days / 365.25);
+
+                return ageInYears.ToString();
+            }
+            else
+            {
+                return "";
+            }       
         }
 
         #region Predefined code
