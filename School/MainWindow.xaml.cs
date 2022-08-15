@@ -57,13 +57,15 @@ namespace School
         // When the user presses a key, determine whether to add a new student to a class, remove a student from a class, or modify the details of a student
         private void studentsList_KeyDown(object sender, KeyEventArgs e)
         {
+            StudentForm sf;
+
             switch (e.Key)
             {
                 //Init the "StudentForm" window
                 case Key.Enter:
                     Student selectedStudent = studentsList.SelectedItem as Student;
-                    
-                    StudentForm sf = new StudentForm { Title = "Edit Student Details" };
+
+                    sf = new StudentForm { Title = "Edit Student Details" };
                     sf.firstName.Text = selectedStudent.FirstName;
                     sf.lastName.Text = selectedStudent.LastName;
                     sf.dateOfBirth.Text = selectedStudent.DateOfBirth.ToString("d");
@@ -82,6 +84,8 @@ namespace School
                     break;
 
                 case Key.Insert:
+                    sf = new StudentForm { Title = $"New Student for Class {teacher.Class}" };
+
                     break;
 
                 default:
