@@ -59,8 +59,14 @@ namespace School
         {
             switch (e.Key)
             {
+                //Init the "StudentForm" window
                 case Key.Enter:
                     Student student = studentsList.SelectedItem as Student;
+                    
+                    StudentForm sf = new StudentForm { Title = "Edit Student Details" };
+                    sf.firstName.Text = student.FirstName;
+                    sf.lastName.Text = student.LastName;
+                    sf.dateOfBirth.Text = student.DateOfBirth.ToString("d");
                     break;
 
                 default:
