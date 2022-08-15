@@ -78,6 +78,7 @@ namespace School
                         saveChanges.IsEnabled = true;
                     }
 
+                    //Task 5: Use the Visual Studio Debugger to step through the code
                     break;
 
                 default:
