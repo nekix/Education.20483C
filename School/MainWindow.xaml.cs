@@ -102,7 +102,6 @@ namespace School
             }
         }
 
-
         //Edit selected student
         private void studentsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -139,6 +138,7 @@ namespace School
 
         #endregion
 
+        #region Operations
         private void addNewStudent()
         {
             StudentForm sf = new StudentForm { Title = $"New Student for Class {teacher.Class}" };
@@ -169,6 +169,8 @@ namespace School
                 saveChanges.IsEnabled = true;
             }
         }
+
+        #endregion
     }
 
     //Convert date of birth to Age
