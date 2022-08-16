@@ -8,6 +8,7 @@ using System.Windows.Input;
 using School.Data;
 using System.Globalization;
 using System.Data;
+using System.Data.Objects;
 
 namespace School
 {
@@ -63,18 +64,18 @@ namespace School
 
             switch (e.Key)
             {
-                //Edit selected student
+                // Edit selected student
                 case Key.Enter:
                     //Link to editable student
                     selectedStudent = studentsList.SelectedItem as Student;
 
-                    //Copy selected student fields to student form
+                    // Copy selected student fields to student form
                     sf = new StudentForm { Title = "Edit Student Details" };
                     sf.firstName.Text = selectedStudent.FirstName;
                     sf.lastName.Text = selectedStudent.LastName;
                     sf.dateOfBirth.Text = selectedStudent.DateOfBirth.ToString("d");
 
-                    //Display the StudentForm window
+                    // Display the StudentForm window
                     if (sf.ShowDialog() is true)
                     {
                         //Update selected student fields from student form
@@ -87,12 +88,12 @@ namespace School
                     
                     break;
 
-                    //Add new student 
+                    // Add new student 
                 case Key.Insert:
                     addNewStudent();
                     break;
 
-                    //Delete selected student
+                    // Delete selected student
                 case Key.Delete:
                     removeStudent();
                     break;
@@ -102,25 +103,25 @@ namespace School
             }
         }
 
-        //Edit selected student
+        // Edit selected student
         private void studentsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             StudentForm sf;
             Student selectedStudent;
 
-            //Link to editable student
+            // Link to editable student
             selectedStudent = studentsList.SelectedItem as Student;
 
-            //Copy selected student fields to student form
+            // Copy selected student fields to student form
             sf = new StudentForm { Title = "Edit Student Details" };
             sf.firstName.Text = selectedStudent.FirstName;
             sf.lastName.Text = selectedStudent.LastName;
             sf.dateOfBirth.Text = selectedStudent.DateOfBirth.ToString("d");
 
-            //Display the StudentForm window
+            // Display the StudentForm window
             if (sf.ShowDialog() is true)
             {
-                //Update selected student fields from student form
+                // Update selected student fields from student form
                 selectedStudent.FirstName = sf.firstName.Text;
                 selectedStudent.LastName = sf.lastName.Text;
                 selectedStudent.DateOfBirth = DateTime.Parse(sf.dateOfBirth.Text, CultureInfo.InvariantCulture);
@@ -133,8 +134,29 @@ namespace School
         // Save changes back to the database and make them permanent
         private void saveChanges_Click(object sender, RoutedEventArgs e)
         {
-            schoolContext.SaveChanges();
-            saveChanges.IsEnabled = false;
+            try
+            {
+                schoolContext.SaveChanges();
+                saveChanges.IsEnabled = false;
+            }
+            catch (OptimisticConcurrencyException)
+            {
+                // If the user has changed the same students earlier, then overwrite their changes with the new data
+                schoolContext.Refresh(RefreshMode.ClientWins, schoolContext.Students);
+                schoolContext.SaveChanges();
+            }
+            catch (UpdateException uEx)
+            {
+                // If some sort of database exception has occurred, then display the reason for the exception and rollback
+                MessageBox.Show(uEx.InnerException.Message, "Error saving changes");
+                schoolContext.Refresh(RefreshMode.StoreWins, schoolContext.Students);
+            }
+            catch (Exception ex)
+            {
+                // If some other exception occurs, report it to the user
+                MessageBox.Show(ex.Message, "Error saving changes");
+                schoolContext.Refresh(RefreshMode.ClientWins, schoolContext.Students);
+            }
         }
 
         #endregion
@@ -144,7 +166,7 @@ namespace School
         {
             StudentForm sf = new StudentForm { Title = $"New Student for Class {teacher.Class}" };
 
-            //Display the StudentForm window
+            // Display the StudentForm window
             if (sf.ShowDialog() is true)
             {
                 Student newStudent = new Student();
@@ -163,7 +185,7 @@ namespace School
         {
             Student selectedStudent = studentsList.SelectedItem as Student;
 
-            //Display "MessageBox" to confirm the deletion
+            // Display "MessageBox" to confirm the deletion
             if (MessageBox.Show($"Remove {selectedStudent.FirstName} {selectedStudent.LastName}?", "Prompt to confirm the deletion of a student record.", MessageBoxButton.YesNo) is MessageBoxResult.Yes)
             {
                 schoolContext.Students.DeleteObject(selectedStudent);
@@ -174,7 +196,7 @@ namespace School
         #endregion
     }
 
-    //Convert date of birth to Age
+    // Convert date of birth to Age
     [ValueConversion(typeof(string), typeof(Decimal))]
     class AgeConverter : IValueConverter
     {
