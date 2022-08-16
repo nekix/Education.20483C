@@ -21,54 +21,40 @@
                 <TextBlock Text="Back" FontSize="24"/>
             </Button>
 
-            <StackPanel x:Name="studentName" Grid.Row="1" Margin="30" Height="250" Width="235">
-                <TextBlock x:Name="firstName" Text="" FontSize="16" />
-                <TextBlock x:Name="lastName" Text="" FontSize="16"  />
+            <StackPanel x:Name="studentName" Grid.Row="1" Margin="30" Height="250" Width="235" >
+                <TextBlock x:Name="firstName" FontSize="16" Text="{Binding FirstName}"/>
+                <TextBlock x:Name="lastName" FontSize="16"  Text="{Binding LastName}"/>
             </StackPanel>
-        </Grid> 
-        
+        </Grid>
+
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="10*"/>
             </Grid.RowDefinitions>
-            
+
             <TextBlock Grid.Row="0" Text="Report Card" FontSize="24"/>
-            
+
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" BorderThickness="0">
-                <Grid x:Name="studentGrades" Margin="0" VerticalAlignment="Top">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="140"/>
-                        <ColumnDefinition Width="50"/>
-                        <ColumnDefinition Width="200"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Grid.Row="0" Text="5/5/2012" Margin="5,0,5,0" HorizontalAlignment="Left" FontSize="16" VerticalAlignment="Center"  />
-                    <TextBlock Grid.Column="1" Grid.Row="0" Text="Math" Margin="5,0,5,0" HorizontalAlignment="Left" FontSize="16" VerticalAlignment="Center" />
-                    <TextBlock Grid.Column="2" Grid.Row="0" Text="A-" Margin="5,0,5,0" HorizontalAlignment="Left" FontSize="16" VerticalAlignment="Center"  />
-                    <TextBlock Grid.Column="3" Grid.Row="0" Text="Very good" Margin="5,0,5,0" Width="175" FontSize="16" TextWrapping="Wrap" VerticalAlignment="Center"  />
-                    
-                    <TextBlock Grid.Column="0" Grid.Row="1" Text="6/6/2012" Margin="5,0,5,0" HorizontalAlignment="Left" FontSize="16" VerticalAlignment="Center"  />
-                    <TextBlock Grid.Column="1" Grid.Row="1" Text="English" Margin="5,0,5,0" HorizontalAlignment="Left" FontSize="16" VerticalAlignment="Center" />
-                    <TextBlock Grid.Column="2" Grid.Row="1" Text="C-" Margin="5,0,5,0" HorizontalAlignment="Left" FontSize="16" VerticalAlignment="Center"  />
-                    <TextBlock Grid.Column="3" Grid.Row="1" Text="Must try harder" Margin="5,0,5,0" Width="175" FontSize="16" TextWrapping="Wrap" VerticalAlignment="Center"  />
-                    
-                    <TextBlock Grid.Column="0" Grid.Row="2" Text="7/7/2012" Margin="5,0,5,0" HorizontalAlignment="Left" FontSize="16" VerticalAlignment="Center"  />
-                    <TextBlock Grid.Column="1" Grid.Row="2" Text="History" Margin="5,0,5,0" HorizontalAlignment="Left" FontSize="16" VerticalAlignment="Center" />
-                    <TextBlock Grid.Column="2" Grid.Row="2" Text="A+" Margin="5,0,5,0" HorizontalAlignment="Left" FontSize="16" VerticalAlignment="Center"  />
-                    <TextBlock Grid.Column="3" Grid.Row="2" Text="Excellent" Margin="5,0,5,0" Width="175" FontSize="16" TextWrapping="Wrap" VerticalAlignment="Center"  />
-                    
-                    <TextBlock Grid.Column="0" Grid.Row="3" Text="8/8/2012" Margin="5,0,5,0" HorizontalAlignment="Left" FontSize="16" VerticalAlignment="Center"  />
-                    <TextBlock Grid.Column="1" Grid.Row="3" Text="Geography" Margin="5,0,5,0" HorizontalAlignment="Left" FontSize="16" VerticalAlignment="Center" />
-                    <TextBlock Grid.Column="2" Grid.Row="3" Text="B-" Margin="5,0,5,0" HorizontalAlignment="Left" FontSize="16" VerticalAlignment="Center"  />
-                    <TextBlock Grid.Column="3" Grid.Row="3" Text="Could do better" Margin="5,0,5,0" Width="175" FontSize="16" TextWrapping="Wrap" VerticalAlignment="Center"  />
-                </Grid>
+                <ItemsControl x:Name="studentGrades" ItemsSource="{Binding}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0" Height="36">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="140"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="200"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0" Margin="5,0,5,0" Text="{Binding AssessmentDate}" HorizontalAlignment="Left" FontSize="16" VerticalAlignment="Center"  />
+                                <TextBlock Grid.Column="1" Margin="5,0,5,0" Text="{Binding SubjectName}" HorizontalAlignment="Left" FontSize="16" VerticalAlignment="Center" />
+                                <TextBlock Grid.Column="2" Margin="5,0,5,0" Text="{Binding Assessment}" HorizontalAlignment="Left" FontSize="16" VerticalAlignment="Center"  />
+                                <TextBlock Grid.Column="3" Margin="5,0,5,0" Text="{Binding Comments}" Width="175" FontSize="16" TextWrapping="Wrap" VerticalAlignment="Center"  />
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </ScrollViewer>
         </Grid>
     </Grid>

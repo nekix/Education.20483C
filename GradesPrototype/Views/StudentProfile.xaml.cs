@@ -44,24 +44,14 @@ namespace GradesPrototype.Views
 
             // If the user is a teacher, raise the Back event
             // The MainWindow page has a handler that catches this event and returns to the Students page
-            if (Back != null)
-            {
-                Back(sender, e);
-            }
+            Back?.Invoke(sender, e);
         }
         #endregion
 
         // Display the details for the current student including the grades for the student
         public void Refresh()
         {
-            //Parse first name and last name
-            Match matchNames = Regex.Match(SessionContext.CurrentStudent, @"([^ ]+) ([^ ]+)");
-
-            if (matchNames.Success)
-            {
-                firstName.Text = matchNames.Groups[1].Value;
-                lastName.Text = matchNames.Groups[2].Value;
-            }
+            studentName.DataContext = SessionContext.CurrentStudent;
 
             //Hide button "Back" for student
             if (SessionContext.UserRole is Role.Student)
@@ -72,6 +62,13 @@ namespace GradesPrototype.Views
             {
                 btnBack.Visibility = Visibility.Visible;
             }
+
+            // Find and display all the grades for the student in the studentGrades ItemsControl
+            ArrayList grades = new ArrayList ((from Grade g in DataSource.Grades
+                                               where g.StudentID == SessionContext.CurrentStudent.StudentID
+                                               select g).ToList());
+
+            studentGrades.ItemsSource = grades;
         }
     }
 }
