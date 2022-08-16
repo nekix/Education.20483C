@@ -11,7 +11,7 @@ namespace GradesPrototype.Data
         public int StudentID;
         public string UserName;
         public string Password;
-        public string TeacherID;
+        public int TeacherID;
         public string FirstName;
         public string LastName;
     }
