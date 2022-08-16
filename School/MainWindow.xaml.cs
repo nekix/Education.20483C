@@ -156,7 +156,7 @@ namespace School
                 // If some other exception occurs, report it to the user
                 MessageBox.Show(ex.Message, "Error saving changes");
                 schoolContext.Refresh(RefreshMode.ClientWins, schoolContext.Students);
-            }
+            } 
         }
 
         #endregion
