@@ -36,7 +36,7 @@ namespace GradesPrototype.Views
         #region Logon Validation
 
         //Init logon process
-        public void Logon_Click(object sender, RoutedEventArgs e)
+        private void Logon_Click(object sender, RoutedEventArgs e)
         {
             //Check teacher account
             var teacher = (from Teacher t in DataSource.Teachers

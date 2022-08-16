@@ -11,7 +11,6 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -23,12 +22,7 @@
 
                 <TextBlock Grid.Row="1" FontSize="24" Text="Password: " />
                 <PasswordBox x:Name="password" Grid.Row="1" Grid.Column="1" FontSize="22" />
-                
-                <TextBlock Grid.Row="2" FontSize="24" Text="Teacher:" />
-                <CheckBox x:Name="userrole" Grid.Row="2"  Grid.Column="2" FontSize="24" IsChecked="False" VerticalAlignment="Center"/>
-                
-                <!-- TODO: Exercise 1: Task 2c: Specify that the Logon button should raise the Logon_Click event handler in this view-->
-                <Button Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Log on" FontSize="24" Click="Logon_Click" />
+                <Button Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Log on" FontSize="24" Click="Logon_Click" />
             </Grid>
         </Grid> 
     </Grid>

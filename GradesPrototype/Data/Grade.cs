@@ -10,10 +10,10 @@ namespace GradesPrototype.Data
 
     public struct Grade
     {
-        public int StudentID;
-        public string AssessmentDate;
-        public string SubjectName;
-        public string Assessment;
-        public string Comments;
+        public int StudentID { get; set; }
+        public string AssessmentDate { get; set; }
+        public string SubjectName { get; set; }
+        public string Assessment { get; set; }
+        public string Comments { get; set; }
     }
 }
