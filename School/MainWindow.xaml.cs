@@ -84,7 +84,7 @@ namespace School
 
                         saveChanges.IsEnabled = true;
                     }
-                 
+                    
                     break;
 
                     //Add new student 
