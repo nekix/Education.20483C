@@ -89,34 +89,12 @@ namespace School
 
                     //Add new student 
                 case Key.Insert:
-                    Student newStudent = new Student();
-                    sf = new StudentForm { Title = $"New Student for Class {teacher.Class}" };
-
-                    //Display the StudentForm window
-                    if (sf.ShowDialog() is true)
-                    {
-                        newStudent.FirstName = sf.firstName.Text;
-                        newStudent.LastName = sf.lastName.Text;
-                        newStudent.DateOfBirth = DateTime.Parse(sf.dateOfBirth.Text, CultureInfo.InvariantCulture);
-
-                        teacher.Students.Add(newStudent);
-
-                        saveChanges.IsEnabled = true;
-                    }
-
+                    addNewStudent();
                     break;
 
                     //Delete selected student
                 case Key.Delete:
-                    selectedStudent = studentsList.SelectedItem as Student;
-
-                    //Display "MessageBox" to confirm the deletion
-                    if(MessageBox.Show($"Remove {selectedStudent.FirstName} {selectedStudent.LastName}?", "Prompt to confirm the deletion of a student record.", MessageBoxButton.YesNo) is MessageBoxResult.Yes)
-                    {
-                        schoolContext.Students.DeleteObject(selectedStudent);
-                        saveChanges.IsEnabled = true;
-                    }
-
+                    removeStudent();
                     break;
 
                 default:
@@ -150,8 +128,6 @@ namespace School
 
                 saveChanges.IsEnabled = true;
             }
-
-            //Task 2: Run the application and verify that the user can now double-click a student to edit their details
         }
 
         #region Predefined code
@@ -162,6 +138,37 @@ namespace School
         }
 
         #endregion
+
+        private void addNewStudent()
+        {
+            StudentForm sf = new StudentForm { Title = $"New Student for Class {teacher.Class}" };
+
+            //Display the StudentForm window
+            if (sf.ShowDialog() is true)
+            {
+                Student newStudent = new Student();
+
+                newStudent.FirstName = sf.firstName.Text;
+                newStudent.LastName = sf.lastName.Text;
+                newStudent.DateOfBirth = DateTime.Parse(sf.dateOfBirth.Text, CultureInfo.InvariantCulture);
+
+                teacher.Students.Add(newStudent);
+
+                saveChanges.IsEnabled = true;
+            }
+        }
+
+        private void removeStudent()
+        {
+            Student selectedStudent = studentsList.SelectedItem as Student;
+
+            //Display "MessageBox" to confirm the deletion
+            if (MessageBox.Show($"Remove {selectedStudent.FirstName} {selectedStudent.LastName}?", "Prompt to confirm the deletion of a student record.", MessageBoxButton.YesNo) is MessageBoxResult.Yes)
+            {
+                schoolContext.Students.DeleteObject(selectedStudent);
+                saveChanges.IsEnabled = true;
+            }
+        }
     }
 
     //Convert date of birth to Age
