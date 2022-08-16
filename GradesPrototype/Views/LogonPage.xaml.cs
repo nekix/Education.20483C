@@ -48,9 +48,6 @@ namespace GradesPrototype.Views
             LogonSuccess?.Invoke(this, null);
         }
 
-        // TODO: Exercise 1: Task 2b: Implement the Logon_Click event handler for the Logon button
-        // Simulate logging on (no validation or authentication performed yet)
-
         #endregion
     }
 }
