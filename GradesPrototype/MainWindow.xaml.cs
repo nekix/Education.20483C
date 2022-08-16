@@ -78,6 +78,12 @@ namespace GradesPrototype
             logonPage.Visibility = Visibility.Visible;
         }
 
+        //Handke failed logon 
+        private void Logon_Failed(object sender, EventArgs e)
+        {
+            MessageBox.Show("Invalid Username or Password", "Logon Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
         // Handle the Back button on the Student page
         private void studentPage_Back(object sender, EventArgs e)
         {
@@ -98,14 +104,14 @@ namespace GradesPrototype
         // Update the display for the logged on user (student or teacher)
         private void Refresh()
         {
-            txtName.Text = $"Welcome {SessionContext.UserName}";
-
             if (SessionContext.UserRole is Role.Student)
             {
+                txtName.Text = $"Welcome {SessionContext.CurrentStudent.FirstName} {SessionContext.CurrentStudent.LastName}";
                 GotoStudentProfile();
             }
             else
             {
+                txtName.Text = $"Welcome {SessionContext.CurrentTeacher.FirstName} {SessionContext.CurrentTeacher.LastName}";
                 GotoStudentsPage();
             }
         }

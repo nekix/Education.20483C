@@ -52,6 +52,7 @@ namespace GradesPrototype.Views
                 SessionContext.CurrentTeacher = teacher;
 
                 LogonSuccess?.Invoke(this, null);
+                return;
             }
 
             //Check student account
@@ -68,6 +69,7 @@ namespace GradesPrototype.Views
                 SessionContext.CurrentStudent = student;
 
                 LogonSuccess?.Invoke(this, null);
+                return;
             }
 
             //Raise logon failed event
