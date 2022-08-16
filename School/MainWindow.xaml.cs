@@ -133,7 +133,8 @@ namespace School
         // Save changes back to the database and make them permanent
         private void saveChanges_Click(object sender, RoutedEventArgs e)
         {
-            //Need to do
+            schoolContext.SaveChanges();
+            saveChanges.IsEnabled = false;
         }
 
         #endregion
