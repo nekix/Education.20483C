@@ -31,7 +31,7 @@ namespace GradesPrototype
         }
 
         #region Navigation
-        // TODO: Exercise 1: Task 3a: Display the logon view and and hide the list of students and single student view
+        // Display the logon view and and hide the list of students and single student view
         public void GotoLogon()
         {
             logonPage.Visibility = Visibility.Visible;
@@ -39,16 +39,20 @@ namespace GradesPrototype
             studentProfile.Visibility = Visibility.Collapsed;
         }
 
-        // TODO: Exercise 1: Task 4c: Display the list of students
+        // Display the list of students
         private void GotoStudentsPage()
-        {            
-
+        {
+            studentProfile.Visibility = Visibility.Collapsed;
+            studentsPage.Visibility = Visibility.Visible;
+            studentsPage.Refresh();
         }
 
-        // TODO: Exercise 1: Task 4b: Display the details for a single student
+        // Display the details for a single student
         public void GotoStudentProfile()
         {
-
+            studentsPage.Visibility = Visibility.Collapsed;
+            studentProfile.Visibility = Visibility.Visible;
+            studentProfile.Refresh();
         }
         #endregion
 
@@ -90,10 +94,19 @@ namespace GradesPrototype
 
         #region Display Logic
 
-        // TODO: Exercise 1: Task 4a: Update the display for the logged on user (student or teacher)
+        // Update the display for the logged on user (student or teacher)
         private void Refresh()
         {
- 
+            txtName.Text = $"Welcome {SessionContext.UserName}";
+
+            if (SessionContext.UserRole is Role.Student)
+            {
+                GotoStudentProfile();
+            }
+            else
+            {
+                GotoStudentsPage();
+            }
         }
         #endregion
     }

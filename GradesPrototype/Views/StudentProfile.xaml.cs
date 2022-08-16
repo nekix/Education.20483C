@@ -51,12 +51,27 @@ namespace GradesPrototype.Views
         }
         #endregion
 
-        // TODO: Exercise 1: Task 4d: Display the details for the current student including the grades for the student
-        // The name of the student is available in the CurrentStudent property of the global context
-        // Grades data is hardcoded in the XAML code for the StudentProfile view in this version of the prototype
+        // Display the details for the current student including the grades for the student
         public void Refresh()
         {
+            //Parse first name and last name
+            Match matchNames = Regex.Match(SessionContext.CurrentStudent, @"([^ ]+) ([^ ]+)");
 
+            if (matchNames.Success)
+            {
+                firstName.Text = matchNames.Groups[1].Value;
+                lastName.Text = matchNames.Groups[2].Value;
+            }
+
+            //Hide button "Back" for student
+            if (SessionContext.UserRole is Role.Student)
+            {
+                btnBack.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                btnBack.Visibility = Visibility.Visible;
+            }
         }
     }
 }
