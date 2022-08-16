@@ -65,8 +65,10 @@ namespace School
             {
                 //Edit selected student
                 case Key.Enter:
+                    //Link to editable student
                     selectedStudent = studentsList.SelectedItem as Student;
 
+                    //Copy selected student fields to student form
                     sf = new StudentForm { Title = "Edit Student Details" };
                     sf.firstName.Text = selectedStudent.FirstName;
                     sf.lastName.Text = selectedStudent.LastName;
@@ -75,6 +77,7 @@ namespace School
                     //Display the StudentForm window
                     if (sf.ShowDialog() is true)
                     {
+                        //Update selected student fields from student form
                         selectedStudent.FirstName = sf.firstName.Text;
                         selectedStudent.LastName = sf.lastName.Text;
                         selectedStudent.DateOfBirth = DateTime.Parse(sf.dateOfBirth.Text, CultureInfo.InvariantCulture);
@@ -121,13 +124,35 @@ namespace School
             }
         }
 
-        #region Predefined code
 
+        //Edit selected student
         private void studentsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
- 
+            StudentForm sf;
+            Student selectedStudent;
+
+            //Link to editable student
+            selectedStudent = studentsList.SelectedItem as Student;
+
+            //Copy selected student fields to student form
+            sf = new StudentForm { Title = "Edit Student Details" };
+            sf.firstName.Text = selectedStudent.FirstName;
+            sf.lastName.Text = selectedStudent.LastName;
+            sf.dateOfBirth.Text = selectedStudent.DateOfBirth.ToString("d");
+
+            //Display the StudentForm window
+            if (sf.ShowDialog() is true)
+            {
+                //Update selected student fields from student form
+                selectedStudent.FirstName = sf.firstName.Text;
+                selectedStudent.LastName = sf.lastName.Text;
+                selectedStudent.DateOfBirth = DateTime.Parse(sf.dateOfBirth.Text, CultureInfo.InvariantCulture);
+
+                saveChanges.IsEnabled = true;
+            }
         }
 
+        #region Predefined code
         // Save changes back to the database and make them permanent
         private void saveChanges_Click(object sender, RoutedEventArgs e)
         {
