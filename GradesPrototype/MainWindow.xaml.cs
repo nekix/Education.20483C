@@ -84,11 +84,12 @@ namespace GradesPrototype
             GotoStudentsPage();
         }
 
-        // TODO: Exercise 1: Task 5b: Handle the StudentSelected event when the user clicks a student on the Students page
+        // Handle the StudentSelected event when the user clicks a student on the Students page
         // Set the global context to the name of the student and call the GotoStudentProfile method to display the details of the student
         private void studentsPage_StudentSelected(object sender, StudentEventArgs e)
         {
-
+            SessionContext.CurrentStudent = e.Child;
+            GotoStudentProfile();
         }
         #endregion
 

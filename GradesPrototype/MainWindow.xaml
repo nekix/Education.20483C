@@ -30,8 +30,7 @@
                 <!-- CONTENT -->
                 <y:LogonPage x:Name="logonPage" Visibility="Collapsed" LogonSuccess="Logon_Success"/>
                 
-                <!-- TODO: Exercise 1: Task 5c: Catch the StudentSelected event and call the studentsPage_StudentSelected event handler-->
-                <y:StudentsPage x:Name="studentsPage" Visibility="Collapsed" />
+                <y:StudentsPage x:Name="studentsPage" Visibility="Collapsed" StudentSelected="studentsPage_StudentSelected"/>
                 
                 <y:StudentProfile x:Name="studentProfile" Back="studentPage_Back" Visibility="Collapsed" />
                 <!-- CONTENT -->
