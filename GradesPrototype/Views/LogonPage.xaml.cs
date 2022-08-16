@@ -29,6 +29,7 @@ namespace GradesPrototype.Views
 
         #region Event Members
         public event EventHandler LogonSuccess;
+        public event EventHandler LogonFailed;
 
         #endregion
 
