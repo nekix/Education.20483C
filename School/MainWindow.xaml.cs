@@ -150,6 +150,8 @@ namespace School
 
                 saveChanges.IsEnabled = true;
             }
+
+            //Task 2: Run the application and verify that the user can now double-click a student to edit their details
         }
 
         #region Predefined code
