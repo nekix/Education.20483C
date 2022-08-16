@@ -29,7 +29,7 @@ namespace GradesPrototype.Views
 
         #region Event Members
         public event EventHandler LogonSuccess;
-        public event EventHandler LogonFailed;
+        public event EventHandler LogonFailed; 
 
         #endregion
 
@@ -38,15 +38,40 @@ namespace GradesPrototype.Views
         //Init logon process
         public void Logon_Click(object sender, RoutedEventArgs e)
         {
-            SessionContext.UserName = username.Text;
+            //Check teacher account
+            var teacher = (from Teacher t in DataSource.Teachers
+                          where t.UserName == username.Text
+                          where t.Password == password.Password
+                          select t).FirstOrDefault();
 
-            //Set dummy current student
-            if ((SessionContext.UserRole = (bool)userrole.IsChecked ? Role.Teacher : Role.Student) == Role.Student)
+            if (!(teacher is default(Teacher)))
             {
-                SessionContext.CurrentStudent = "Eric Gruber";
+                SessionContext.UserID = teacher.TeacherID;
+                SessionContext.UserRole = Role.Teacher;
+                SessionContext.UserName = teacher.UserName;
+                SessionContext.CurrentTeacher = teacher;
+
+                LogonSuccess?.Invoke(this, null);
             }
 
-            LogonSuccess?.Invoke(this, null);
+            //Check student account
+            var student = (from Student t in DataSource.Students
+                           where t.UserName == username.Text
+                           where t.Password == password.Password
+                           select t).FirstOrDefault();
+
+            if (!(student is default(Student)))
+            {
+                SessionContext.UserID = student.StudentID;
+                SessionContext.UserRole = Role.Student;
+                SessionContext.UserName = student.UserName;
+                SessionContext.CurrentStudent = student;
+
+                LogonSuccess?.Invoke(this, null);
+            }
+
+            //Raise logon failed event
+            LogonFailed?.Invoke(this, null);
         }
 
         #endregion
