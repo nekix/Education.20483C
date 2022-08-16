@@ -31,6 +31,19 @@ namespace School
                 return;
             }
 
+            //Validate last name
+            if (!DateTime.TryParse(dateOfBirth.Text, out DateTime result))
+            {
+                MessageBox.Show($"The date of birth must be a valid date", "Error");
+                return;
+            }
+
+            if(DateTime.Now.Subtract(result).Days / 365.25 < 5)
+            {
+                MessageBox.Show($"The student must at least 5 years old", "Error");
+                return;
+            }
+
 
             this.DialogResult = true;
         }
