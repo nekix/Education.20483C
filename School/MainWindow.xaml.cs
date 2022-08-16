@@ -133,7 +133,7 @@ namespace School
         // Save changes back to the database and make them permanent
         private void saveChanges_Click(object sender, RoutedEventArgs e)
         {
-            
+            //Need to do
         }
 
         #endregion
@@ -196,14 +196,10 @@ namespace School
             }       
         }
 
-        #region Predefined code
-
         public object ConvertBack(object value, Type targetType, object parameter,
                                   System.Globalization.CultureInfo culture)
         {
             throw new NotImplementedException();
         }
-
-        #endregion
     }
 }
