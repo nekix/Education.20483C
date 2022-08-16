@@ -30,7 +30,7 @@
                 <!-- CONTENT -->
                 <y:LogonPage x:Name="logonPage" Visibility="Collapsed" LogonSuccess="Logon_Success"/>
                 
-                <y:StudentsPage x:Name="studentsPage" Visibility="Collapsed" StudentSelected="studentsPage_StudentSelected"/>
+                <y:StudentsPage x:Name="studentsPage" Visibility="Collapsed" StudentSelected="studentsPage_StudentSelected"/> 
                 
                 <y:StudentProfile x:Name="studentProfile" Back="studentPage_Back" Visibility="Collapsed" />
                 <!-- CONTENT -->
