@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using GradesPrototype.Data;
+using GradesPrototype.Services;
 
 namespace GradesPrototype.Views
 {
@@ -30,11 +31,15 @@ namespace GradesPrototype.Views
         #region Display Logic
 
         // Display students for the current teacher
-        // Student details are hard coded in the XAML definition of the view
         public void Refresh()
         {
-            // Display the class name - hard-coded
-            txtClass.Text = "3A";
+            ArrayList students = new ArrayList((from Student st in DataSource.Students
+                                                where st.TeacherID == SessionContext.CurrentTeacher.TeacherID
+                                                select st).ToList());
+
+            list.ItemsSource = students;
+
+            txtClass.Text = $"Class {SessionContext.CurrentTeacher.Class}";
         }
         #endregion
 
@@ -51,7 +56,9 @@ namespace GradesPrototype.Views
         {
             if (sender is Button button)
             {
-                StudentSelected?.Invoke(this, new StudentEventArgs((string)button.Tag));
+                Student student = (Student)button.DataContext;
+
+                StudentSelected?.Invoke(this, new StudentEventArgs(student));
             }
         }
         #endregion
@@ -60,9 +67,9 @@ namespace GradesPrototype.Views
     // EventArgs class for passing Student information to an event
     public class StudentEventArgs : EventArgs
     {
-        public string Child { get; set; }
+        public Student Child { get; set; }
 
-        public StudentEventArgs(string s)
+        public StudentEventArgs(Student s)
         {
             Child = s;
         }
