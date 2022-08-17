@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace GradesPrototype.Data
 {
+    // Base class
     public abstract class User
     {
         public string UserName { get; set; }
 
+        // Default password generation
         private string _password = Guid.NewGuid().ToString();
         public string Password
         {

@@ -6,15 +6,9 @@ using System.Threading.Tasks;
 
 namespace GradesPrototype.Data
 {
-    public class Teacher
+    public class Teacher : User
     {
         public int TeacherID { get; set; }
-        public string UserName { get; set; }
-        private string _password = Guid.NewGuid().ToString();
-        public string Password
-        {
-            set { _password = value; }
-        }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Class { get; set; }
@@ -38,12 +32,6 @@ namespace GradesPrototype.Data
             LastName = lastName;
             Class = className;
         }
-
-        public bool VerifyPassword(string Password)
-        {
-            return string.Compare(Password, _password, StringComparison.Ordinal) == 0;
-        }
-
 
         public void EnrollInClass(Student student)
         {
