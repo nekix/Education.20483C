@@ -15,6 +15,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <Button x:Name="btnBack" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="15,0,0,0" Click="Back_Click">
@@ -25,12 +26,17 @@
                 <TextBlock x:Name="firstName" FontSize="16" Text="{Binding FirstName}"/>
                 <TextBlock x:Name="lastName" FontSize="16"  Text="{Binding LastName}"/>
             </StackPanel>
+
+            <Button x:Name="btnRemove" Grid.Row="3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="15,0,0,0" Click="Remove_Click">
+                <TextBlock Text="Remove Student" FontSize="24"/>
+            </Button>
         </Grid>
 
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="10*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" Text="Report Card" FontSize="24"/>
@@ -56,6 +62,10 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
+
+            <Button x:Name="btnAddGrade" Grid.Row="3" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="15,0,0,0" Click="AddGrade_Click">
+                <TextBlock Text="Add Grade" FontSize="24"/>
+            </Button>
         </Grid>
     </Grid>
 </UserControl>

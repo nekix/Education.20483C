@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using GradesPrototype.Controls;
 using GradesPrototype.Data;
 using GradesPrototype.Services;
 
@@ -46,6 +47,62 @@ namespace GradesPrototype.Views
             // The MainWindow page has a handler that catches this event and returns to the Students page
             Back?.Invoke(sender, e);
         }
+
+        // Enable a teacher to remove a student from a class
+        private void Remove_Click(object sender, RoutedEventArgs e)
+        {
+            if (SessionContext.UserRole != Role.Teacher)
+            {
+                return;
+            }
+
+            try
+            {
+                if (MessageBox.Show($"Remove {SessionContext.CurrentStudent.FirstName} {SessionContext.CurrentStudent.LastName}",
+                    "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    SessionContext.CurrentTeacher.RemoveFromClass(SessionContext.CurrentStudent);
+
+                    Back?.Invoke(sender, e);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error remove a student from a class", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // Enable a teacher to add a grade to a student
+        private void AddGrade_Click(object sender, RoutedEventArgs e)
+        {
+            if(SessionContext.UserRole != Role.Teacher)
+            {
+                return;
+            }
+
+            try
+            {
+                GradeDialog dialog = new GradeDialog();
+                if (dialog.ShowDialog().Value)
+                {
+                    Grade grade = new Grade(
+                        0, dialog.assessmentDate.SelectedDate.Value.ToString("d"),
+                        dialog.subject.SelectedValue.ToString(),
+                        dialog.assessmentGrade.Text,
+                        dialog.comments.Text);
+
+                    DataSource.Grades.Add(grade);
+
+                    SessionContext.CurrentStudent.AddGrade(grade);
+
+                    Refresh();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "User if an exception occurs", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
         #endregion
 
         // Display the details for the current student including the grades for the student
@@ -53,18 +110,23 @@ namespace GradesPrototype.Views
         {
             studentName.DataContext = SessionContext.CurrentStudent;
 
-            //Hide button "Back" for student
-            if (SessionContext.UserRole is Role.Student)
+            // If the current user is a student, hide the Back, Remove, and Add Grade buttons
+            // (these features are only applicable to teachers)
+            if (SessionContext.UserRole == Role.Student)
             {
                 btnBack.Visibility = Visibility.Hidden;
+                btnRemove.Visibility = Visibility.Hidden;
+                btnAddGrade.Visibility = Visibility.Hidden;
             }
             else
             {
                 btnBack.Visibility = Visibility.Visible;
+                btnRemove.Visibility = Visibility.Visible;
+                btnAddGrade.Visibility = Visibility.Visible;
             }
 
             // Find and display all the grades for the student in the studentGrades ItemsControl
-            ArrayList grades = new ArrayList ((from Grade g in DataSource.Grades
+            List<Grade> grades = new List<Grade> ((from Grade g in DataSource.Grades
                                                where g.StudentID == SessionContext.CurrentStudent.StudentID
                                                select g).ToList());
 
