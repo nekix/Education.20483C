@@ -41,7 +41,7 @@ namespace GradesPrototype.Data
             }
             else
             {
-                throw new ArgumentException(nameof(EnrollInClass), "Student is already assigned to a class");
+                throw new ArgumentException("Student is already assigned to a class", nameof(EnrollInClass));
             }
         }
 
@@ -53,7 +53,7 @@ namespace GradesPrototype.Data
             }
             else
             {
-                throw new ArgumentException(nameof(RemoveFromClass), "Student is not part of the class");
+                throw new ArgumentException("Student is not part of the class", nameof(RemoveFromClass));
             }
         }
     }

@@ -32,7 +32,7 @@ namespace GradesPrototype.Data
                 }
                 else
                 {
-                    throw new ArgumentException(nameof(AssessmentDate), "Assessment date is not recognized");
+                    throw new ArgumentException("Assessment date is not recognized", nameof(AssessmentDate));
                 }
             }
         }
@@ -49,7 +49,7 @@ namespace GradesPrototype.Data
 
                 if(subject is default(string))
                 {
-                    throw new ArgumentException(nameof(SubjectName), "Subject is not recognized");
+                    throw new ArgumentException("Subject is not recognized", nameof(SubjectName));
                 }
 
                 _subjectName = value;

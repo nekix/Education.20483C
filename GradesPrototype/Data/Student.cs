@@ -47,7 +47,7 @@ namespace GradesPrototype.Data
             }
             else
             {
-                throw new ArgumentException(nameof(AddGrade), "Grade belongs to a different student");
+                throw new ArgumentException("Grade belongs to a different student", nameof(AddGrade));
             }
         }
     }

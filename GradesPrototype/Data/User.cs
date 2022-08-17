@@ -15,12 +15,21 @@ namespace GradesPrototype.Data
         private string _password = Guid.NewGuid().ToString();
         public string Password
         {
-            set { _password = value; } 
+            set
+            {
+                if (SetPassword(value)) { _password = value; return; }
+                throw new ArgumentException("Password not complex enough", nameof(Password));
+            }
         }
 
-        public bool VerifyPassword(string Password)
+        // String parameter containing the password
+        // and return a Boolean value indicating whether
+        // the password has been set successfully.
+        public abstract bool SetPassword(string password);
+
+        public bool VerifyPassword(string password)
         {
-            return string.Compare(Password, _password, StringComparison.Ordinal) == 0;
+            return string.Compare(password, _password, StringComparison.Ordinal) == 0;
         }
     }
 }
