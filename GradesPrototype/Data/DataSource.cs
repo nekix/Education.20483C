@@ -13,6 +13,7 @@ namespace GradesPrototype.Data
         public static ArrayList Teachers;
         public static ArrayList Students;
         public static ArrayList Grades;
+        public static List<string> Subjects;
 
         #region Sample Data
         // Populate the collections with mock data
@@ -107,6 +108,15 @@ namespace GradesPrototype.Data
                 new Grade() { StudentID = 15, AssessmentDate = DateTime.Now.ToString("d"), SubjectName = "English", Assessment = "B+", Comments = "OK" },
                 new Grade() { StudentID = 15, AssessmentDate = DateTime.Now.ToString("d"), SubjectName = "Geography", Assessment = "C-", Comments = "Could do better" },
                 new Grade() { StudentID = 15, AssessmentDate = DateTime.Now.ToString("d"), SubjectName = "History", Assessment = "D-", Comments = "Needs to work harder" },
+            };
+
+            Subjects = new List<string>()
+            {
+                "Math",
+                "English",
+                "History",
+                "Geography",
+                "Science"
             };
         }
         #endregion
