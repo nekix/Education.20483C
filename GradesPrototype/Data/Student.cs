@@ -7,7 +7,7 @@ using System.Windows.Controls;
 
 namespace GradesPrototype.Data
 {
-    public class Student
+    public class Student : IComparable<Student>
     {
         public int StudentID { get; set; }
         public string UserName { get; set; }
@@ -43,6 +43,11 @@ namespace GradesPrototype.Data
         public bool VerifyPassword(string Password)
         {
             return string.Compare(Password, _password, StringComparison.Ordinal) == 0;
+        }
+
+        public int CompareTo(Student other)
+        {
+            return string.Compare(LastName + FirstName, other.LastName + other.FirstName);
         }
     }
 }
