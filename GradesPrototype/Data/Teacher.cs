@@ -47,7 +47,7 @@ namespace GradesPrototype.Data
 
         public void EnrollInClass(Student student)
         {
-            if (student.StudentID == 0)
+            if (student.TeacherID == 0)
             {
                 student.TeacherID = TeacherID;
             }
@@ -59,9 +59,9 @@ namespace GradesPrototype.Data
 
         public void RemoveFromClass(Student student)
         {
-            if(student.StudentID == TeacherID)
+            if(student.TeacherID == TeacherID)
             {
-                student.StudentID = 0;
+                student.TeacherID = 0;
             }
             else
             {

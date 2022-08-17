@@ -41,7 +41,7 @@ namespace GradesPrototype.Controls
             else
             {
                 txtMessage.Visibility = Visibility.Collapsed;
-                list.Visibility = Visibility.Collapsed;
+                list.Visibility = Visibility.Visible;
 
                 list.ItemsSource = unassignedStudents;
             }

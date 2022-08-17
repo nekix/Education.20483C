@@ -34,7 +34,7 @@ namespace GradesPrototype.Views
         // Display students for the current teacher
         public void Refresh()
         {
-            ArrayList students = new ArrayList((from Student st in DataSource.Students
+            List<Student> students = new List<Student>((from Student st in DataSource.Students
                                                 where st.TeacherID == SessionContext.CurrentTeacher.TeacherID
                                                 select st).ToList());
 

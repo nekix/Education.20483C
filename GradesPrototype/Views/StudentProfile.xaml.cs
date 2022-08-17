@@ -110,18 +110,23 @@ namespace GradesPrototype.Views
         {
             studentName.DataContext = SessionContext.CurrentStudent;
 
-            //Hide button "Back" for student
-            if (SessionContext.UserRole is Role.Student)
+            // If the current user is a student, hide the Back, Remove, and Add Grade buttons
+            // (these features are only applicable to teachers)
+            if (SessionContext.UserRole == Role.Student)
             {
                 btnBack.Visibility = Visibility.Hidden;
+                btnRemove.Visibility = Visibility.Hidden;
+                btnAddGrade.Visibility = Visibility.Hidden;
             }
             else
             {
                 btnBack.Visibility = Visibility.Visible;
+                btnRemove.Visibility = Visibility.Visible;
+                btnAddGrade.Visibility = Visibility.Visible;
             }
 
             // Find and display all the grades for the student in the studentGrades ItemsControl
-            ArrayList grades = new ArrayList ((from Grade g in DataSource.Grades
+            List<Grade> grades = new List<Grade> ((from Grade g in DataSource.Grades
                                                where g.StudentID == SessionContext.CurrentStudent.StudentID
                                                select g).ToList());
 
