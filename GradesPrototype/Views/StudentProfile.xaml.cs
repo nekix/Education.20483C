@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using GradesPrototype.Controls;
 using GradesPrototype.Data;
 using GradesPrototype.Services;
+using Microsoft.Win32;
 
 namespace GradesPrototype.Views
 {
@@ -102,6 +103,52 @@ namespace GradesPrototype.Views
             {
                 MessageBox.Show(ex.Message, "User if an exception occurs", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        //  Generate the grades report for the currently selected student
+        private void SaveReport_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                SaveFileDialog dialog = new SaveFileDialog();
+                dialog.Filter = "JSON documents|*.json";
+                dialog.FileName = "Grades";
+                dialog.DefaultExt = ".json";
+
+                // Show file dialog for get file path to save report
+                bool? result = dialog.ShowDialog();
+                if (result.HasValue && result.Value)
+                {
+                    // Get the grades for the currently selected student.
+                    List<Grade> grades = (from g in DataSource.Grades
+                                  where g.StudentID == SessionContext.CurrentStudent.StudentID
+                                  select g).ToList();
+
+
+                }       
+
+                
+
+                // TODO: Exercise 1: Task 2: Serialize the grades to a JSON.
+
+                //TODO: Exercise 1: Task 3a: Modify the message box and ask the user whether they wish to save the report
+
+                //TODO: Exercise 1: Task 3b: Check if the user what to save the report or not
+
+                //TODO: Exercise 1: Task 3c: Save the data to the file by using FileStream
+
+                //TODO: Exercise 1: Task 3d: Release all the stream resources
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Generating Report", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void LoadReport_Click(object sender, RoutedEventArgs e)
+        {
+
         }
         #endregion
 
