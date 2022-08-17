@@ -127,9 +127,11 @@ namespace GradesPrototype.Views
                                           where g.StudentID == SessionContext.CurrentStudent.StudentID
                                           select g).ToList();
 
+                    // Show JSON report and waiting confirm
                     string gradesAsJson = JsonConvert.SerializeObject(grades, Formatting.Indented);
                     MessageBoxResult reply = MessageBox.Show(gradesAsJson, "Save Report?", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
+                    // Save report to file
                     if(reply == MessageBoxResult.Yes)
                     {
                         using (StreamWriter sw = new StreamWriter(dialog.OpenFile()))
@@ -139,19 +141,6 @@ namespace GradesPrototype.Views
                         }
                     }
                 }       
-
-                
-
-                // TODO: Exercise 1: Task 2: Serialize the grades to a JSON.
-
-                //TODO: Exercise 1: Task 3a: Modify the message box and ask the user whether they wish to save the report
-
-                //TODO: Exercise 1: Task 3b: Check if the user what to save the report or not
-
-                //TODO: Exercise 1: Task 3c: Save the data to the file by using FileStream
-
-                //TODO: Exercise 1: Task 3d: Release all the stream resources
-
             }
             catch (Exception ex)
             {
@@ -161,6 +150,10 @@ namespace GradesPrototype.Views
 
         private void LoadReport_Click(object sender, RoutedEventArgs e)
         {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "JSON documents|*.json";
+
+            bool? result = dialog.ShowDialog();
 
         }
         #endregion
