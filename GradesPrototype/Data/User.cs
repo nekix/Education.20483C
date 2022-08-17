@@ -15,7 +15,7 @@ namespace GradesPrototype.Data
         private string _password = Guid.NewGuid().ToString();
         public string Password
         {
-            set { _password = value; }
+            set { _password = value; } 
         }
 
         public bool VerifyPassword(string Password)
