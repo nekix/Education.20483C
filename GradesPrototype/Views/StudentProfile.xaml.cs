@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -11,12 +12,15 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using GradesPrototype.Controls;
 using GradesPrototype.Data;
 using GradesPrototype.Services;
+using Microsoft.Win32;
+using Newtonsoft.Json;
 
 namespace GradesPrototype.Views
 {
@@ -101,6 +105,66 @@ namespace GradesPrototype.Views
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "User if an exception occurs", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        //  Generate the grades report for the currently selected student
+        private void SaveReport_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                SaveFileDialog dialog = new SaveFileDialog();
+                dialog.Filter = "JSON documents|*.json";
+                dialog.FileName = "Grades";
+                dialog.DefaultExt = ".json";
+
+                // Show file dialog for get file path to save report
+                bool? result = dialog.ShowDialog();
+                if (result.HasValue && result.Value)
+                {
+                    // Get the grades for the currently selected student.
+                    List<Grade> grades = (from g in DataSource.Grades
+                                          where g.StudentID == SessionContext.CurrentStudent.StudentID
+                                          select g).ToList();
+
+                    // Show JSON report and waiting confirm
+                    string gradesAsJson = JsonConvert.SerializeObject(grades, Formatting.Indented);
+                    MessageBoxResult reply = MessageBox.Show(gradesAsJson, "Save Report?", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                    // Save report to file
+                    if(reply == MessageBoxResult.Yes)
+                    {
+                        using (StreamWriter sw = new StreamWriter(dialog.OpenFile()))
+                        {
+                            sw.Write(gradesAsJson);
+                            //sw.BaseStream.Position = 0; 
+                        }
+                    }
+                }       
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Generating Report", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void LoadReport_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "JSON documents|*.json";
+
+            bool? result = dialog.ShowDialog();
+            if (result.HasValue && result.Value)
+            {
+                using (StreamReader sw = new StreamReader(dialog.OpenFile()))
+                {
+                    string gradesAsJson = sw.ReadToEnd();
+
+                    List<Grade> gradesList = JsonConvert.DeserializeObject<List<Grade>>(gradesAsJson);
+
+                    studentGrades.ItemsSource = gradesList;
+                }
+
             }
         }
         #endregion
