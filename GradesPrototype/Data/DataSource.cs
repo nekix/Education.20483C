@@ -10,9 +10,9 @@ namespace GradesPrototype.Data
     public class DataSource
     {
         // Collections holding the data used by the prototype application
-        public static ArrayList Teachers;
+        public static List<Teacher> Teachers;
         public static List<Student> Students;
-        public static ArrayList Grades;
+        public static List<Grade> Grades;
         public static List<string> Subjects;
 
         #region Sample Data
@@ -28,7 +28,7 @@ namespace GradesPrototype.Data
                 "Science"
             };
 
-            Teachers = new ArrayList()
+            Teachers = new List<Teacher>()
             {
                 new Teacher() { TeacherID = 1, UserName = "vallee", Password = "password", FirstName = "Esther", LastName = "Valle", Class = "3C" },
                 new Teacher() { TeacherID = 2, UserName = "waited", Password = "password", FirstName = "David", LastName = "Waite", Class = "4B" },
@@ -55,7 +55,7 @@ namespace GradesPrototype.Data
 
             };
 
-            Grades = new ArrayList()
+            Grades = new List<Grade>()
             {
                 new Grade() { StudentID = 1, AssessmentDate = DateTime.Now.ToString("d"), SubjectName = "Math", Assessment = "A-", Comments = "Good" },
                 new Grade() { StudentID = 1, AssessmentDate = DateTime.Now.ToString("d"), SubjectName = "English", Assessment = "B+", Comments = "OK" },
