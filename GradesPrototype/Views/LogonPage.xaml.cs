@@ -44,6 +44,7 @@ namespace GradesPrototype.Views
                           where t.VerifyPassword(password.Password)
                           select t).FirstOrDefault();
 
+            //Set teacher to session context
             if (!(teacher is default(Teacher)))
             {
                 SessionContext.UserID = teacher.TeacherID;
@@ -61,6 +62,7 @@ namespace GradesPrototype.Views
                            where s.VerifyPassword(password.Password)
                            select s).FirstOrDefault();
 
+            //Set student to session context
             if (!(student is default(Student)))
             {
                 SessionContext.UserID = student.StudentID;
