@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using GradesPrototype.Controls;
 using GradesPrototype.Data;
 using GradesPrototype.Services;
 
@@ -71,10 +72,36 @@ namespace GradesPrototype.Views
             }
         }
 
-        // TODO: Exercise 4: Task 5a: Enable a teacher to add a grade to a student
+        // Enable a teacher to add a grade to a student
         private void AddGrade_Click(object sender, RoutedEventArgs e)
         {
+            if(SessionContext.UserRole != Role.Teacher)
+            {
+                return;
+            }
 
+            try
+            {
+                GradeDialog dialog = new GradeDialog();
+                if (dialog.ShowDialog().Value)
+                {
+                    Grade grade = new Grade(
+                        0, dialog.assessmentDate.SelectedDate.Value.ToString("d"),
+                        dialog.subject.SelectedValue.ToString(),
+                        dialog.assessmentGrade.Text,
+                        dialog.comments.Text);
+
+                    DataSource.Grades.Add(grade);
+
+                    SessionContext.CurrentStudent.AddGrade(grade);
+
+                    Refresh();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "User if an exception occurs", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         #endregion
 

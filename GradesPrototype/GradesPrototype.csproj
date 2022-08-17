@@ -78,9 +78,6 @@
     <Compile Include="Controls\StudentDialog.xaml.cs">
       <DependentUpon>StudentDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\StudentForm.xaml.cs">
-      <DependentUpon>StudentForm.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Data\DataSource.cs" />
     <Compile Include="Data\Grade.cs" />
     <Compile Include="Data\Role.cs" />
@@ -105,10 +102,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\StudentDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\StudentForm.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
