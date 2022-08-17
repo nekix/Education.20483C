@@ -65,8 +65,6 @@ namespace GradesPrototype.Controls
                               where s.StudentID == studentID
                               select s).FirstOrDefault();
 
-                SessionContext.CurrentTeacher.EnrollInClass(student);
-
                 string message = string.Format($"Add {student.FirstName} {student.LastName} to your class?");
                 if(MessageBox.Show(message, "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
