@@ -154,7 +154,18 @@ namespace GradesPrototype.Views
             dialog.Filter = "JSON documents|*.json";
 
             bool? result = dialog.ShowDialog();
+            if (result.HasValue && result.Value)
+            {
+                using (StreamReader sw = new StreamReader(dialog.OpenFile()))
+                {
+                    string gradesAsJson = sw.ReadToEnd();
 
+                    List<Grade> gradesList = JsonConvert.DeserializeObject<List<Grade>>(gradesAsJson);
+
+                    studentGrades.ItemsSource = gradesList;
+                }
+
+            }
         }
         #endregion
 
