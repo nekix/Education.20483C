@@ -26,7 +26,7 @@ namespace GradesPrototype
     {
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent(); 
             DataSource.CreateData();
             DataSource.Students.Sort();
             GotoLogon();
