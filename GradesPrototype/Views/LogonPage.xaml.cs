@@ -40,8 +40,8 @@ namespace GradesPrototype.Views
         {
             //Check teacher account
             var teacher = (from Teacher t in DataSource.Teachers
-                          where t.UserName == username.Text
-                          where t.Password == password.Password
+                          where string.Compare(t.UserName, username.Text) == 0
+                          where t.VerifyPassword(password.Password)
                           select t).FirstOrDefault();
 
             if (!(teacher is default(Teacher)))
@@ -56,10 +56,10 @@ namespace GradesPrototype.Views
             }
 
             //Check student account
-            var student = (from Student t in DataSource.Students
-                           where t.UserName == username.Text
-                           where t.Password == password.Password
-                           select t).FirstOrDefault();
+            var student = (from Student s in DataSource.Students
+                           where string.Compare(s.UserName, username.Text) == 0
+                           where s.VerifyPassword(password.Password)
+                           select s).FirstOrDefault();
 
             if (!(student is default(Student)))
             {
