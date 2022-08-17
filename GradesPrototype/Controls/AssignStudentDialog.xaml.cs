@@ -72,6 +72,10 @@ namespace GradesPrototype.Controls
                     Refresh();
                 }
             }
+            catch (ClassFullException exp)
+            {
+                MessageBox.Show(string.Format($"{exp.Message}. Class: {exp.ClassName}"), "Error enrolling student", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             catch (Exception exp)
             {
                 MessageBox.Show(exp.Message, "Error enrolling student", MessageBoxButton.OK, MessageBoxImage.Error);

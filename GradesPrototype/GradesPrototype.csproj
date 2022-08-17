@@ -72,6 +72,9 @@
     <Compile Include="Controls\AssignStudentDialog.xaml.cs">
       <DependentUpon>AssignStudentDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ChangePasswordDialog.xaml.cs">
+      <DependentUpon>ChangePasswordDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\GradeDialog.xaml.cs">
       <DependentUpon>GradeDialog.xaml</DependentUpon>
     </Compile>
@@ -83,6 +86,8 @@
     <Compile Include="Data\Role.cs" />
     <Compile Include="Data\Student.cs" />
     <Compile Include="Data\Teacher.cs" />
+    <Compile Include="Data\User.cs" />
+    <Compile Include="Services\ClassFullException.cs" />
     <Compile Include="Services\SessionContext.cs" />
     <Compile Include="Views\LogonPage.xaml.cs">
       <DependentUpon>LogonPage.xaml</DependentUpon>
@@ -94,6 +99,10 @@
       <DependentUpon>StudentsPage.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\AssignStudentDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ChangePasswordDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

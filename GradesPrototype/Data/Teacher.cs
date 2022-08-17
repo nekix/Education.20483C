@@ -1,20 +1,18 @@
-﻿using System;
+﻿using GradesPrototype.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace GradesPrototype.Data
 {
-    public class Teacher
+    public class Teacher : User
     {
+        private const int MAX_CLASS_SIZE = 8;
+
         public int TeacherID { get; set; }
-        public string UserName { get; set; }
-        private string _password = Guid.NewGuid().ToString();
-        public string Password
-        {
-            set { _password = value; }
-        }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Class { get; set; }
@@ -23,7 +21,6 @@ namespace GradesPrototype.Data
         {
             TeacherID = 0;
             UserName = string.Empty;
-            Password = string.Empty;
             FirstName = string.Empty;
             LastName = string.Empty;
             Class = string.Empty;
@@ -39,21 +36,35 @@ namespace GradesPrototype.Data
             Class = className;
         }
 
-        public bool VerifyPassword(string Password)
+        public override bool SetPassword(string password)
         {
-            return string.Compare(Password, _password, StringComparison.Ordinal) == 0;
-        }
+            if(password.Length >= 8 && Regex.Match(password, @".*[0-9]+.*[0-9]+.*").Success)
+            {
+                _password = password;
+                return true;
+            }
 
+            return false;
+        }
 
         public void EnrollInClass(Student student)
         {
+            int numStudents = (from s in DataSource.Students
+                               where s.TeacherID == TeacherID
+                               select s).Count();
+
+            if (numStudents >= 8)
+            {
+                throw new ClassFullException("Class full: Unable to enroll student", Class);
+            }
+
             if (student.TeacherID == 0)
             {
                 student.TeacherID = TeacherID;
             }
             else
             {
-                throw new ArgumentException(nameof(EnrollInClass), "Student is already assigned to a class");
+                throw new ArgumentException("Student is already assigned to a class", nameof(EnrollInClass));
             }
         }
 
@@ -65,7 +76,7 @@ namespace GradesPrototype.Data
             }
             else
             {
-                throw new ArgumentException(nameof(RemoveFromClass), "Student is not part of the class");
+                throw new ArgumentException("Student is not part of the class", nameof(RemoveFromClass));
             }
         }
     }

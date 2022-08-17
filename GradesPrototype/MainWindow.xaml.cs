@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using GradesPrototype.Controls;
 using GradesPrototype.Data;
 using GradesPrototype.Services;
 using GradesPrototype.Views;
@@ -78,6 +79,21 @@ namespace GradesPrototype
             studentsPage.Visibility = Visibility.Collapsed;
             studentProfile.Visibility = Visibility.Collapsed;
             logonPage.Visibility = Visibility.Visible;
+        }
+
+        // Handle change password request
+        private void ChangePassword_Click(object sender, EventArgs e)
+        {
+            // Use the ChangePasswordDialog to change the user's password
+            ChangePasswordDialog cpd = new ChangePasswordDialog();
+
+            // Display the dialog
+            if (cpd.ShowDialog().Value)
+            {
+                // When the user closes the dialog by using the OK button, the password should have been changed
+                // Display a message to confirm
+                MessageBox.Show("Password changed", "Password", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         //Handke failed logon 

@@ -2,20 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace GradesPrototype.Data
 {
-    public class Student : IComparable<Student>
+    public class Student : User, IComparable<Student>
     {
         public int StudentID { get; set; }
-        public string UserName { get; set; }
-        private string _password = Guid.NewGuid().ToString();
-        public string Password
-        {
-            set { _password = value; }
-        }
         public int TeacherID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -24,7 +19,6 @@ namespace GradesPrototype.Data
         {
             StudentID = 0;
             UserName = string.Empty;
-            Password = string.Empty;
             TeacherID = 0;
             FirstName = string.Empty;
             LastName = string.Empty;
@@ -40,9 +34,15 @@ namespace GradesPrototype.Data
             LastName = lastName;
         }
 
-        public bool VerifyPassword(string Password)
+        public override bool SetPassword(string password)
         {
-            return string.Compare(Password, _password, StringComparison.Ordinal) == 0;
+            if (password.Length >= 6)
+            {
+                _password = password;
+                return true;
+            }
+
+            return false;
         }
 
         public int CompareTo(Student other)
@@ -58,7 +58,7 @@ namespace GradesPrototype.Data
             }
             else
             {
-                throw new ArgumentException(nameof(AddGrade), "Grade belongs to a different student");
+                throw new ArgumentException("Grade belongs to a different student", nameof(AddGrade));
             }
         }
     }
