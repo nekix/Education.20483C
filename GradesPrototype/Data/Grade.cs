@@ -26,11 +26,11 @@ namespace GradesPrototype.Data
             Comments = string.Empty;
         }
 
-        public Grade(int studentID, string assessmentDate, string subjectName, string assessment, string comments)
+        public Grade(int studentID, string assessmentDate, string subject, string assessment, string comments)
         {
             StudentID = studentID;
             AssessmentDate = assessmentDate;
-            SubjectName = subjectName;
+            SubjectName = subject;
             Assessment = assessment;
             Comments = comments;
         }
