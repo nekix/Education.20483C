@@ -49,5 +49,17 @@ namespace GradesPrototype.Data
         {
             return string.Compare(LastName + FirstName, other.LastName + other.FirstName);
         }
+
+        public void AddGrade(Grade grade)
+        {
+            if(grade.StudentID == 0)
+            {
+                grade.StudentID = StudentID;
+            }
+            else
+            {
+                throw new ArgumentException(nameof(AddGrade), "Grade belongs to a different student");
+            }
+        }
     }
 }

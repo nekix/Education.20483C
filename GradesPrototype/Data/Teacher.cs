@@ -43,5 +43,30 @@ namespace GradesPrototype.Data
         {
             return string.Compare(Password, _password, StringComparison.Ordinal) == 0;
         }
+
+
+        public void EnrollInClass(Student student)
+        {
+            if (student.StudentID == 0)
+            {
+                student.TeacherID = TeacherID;
+            }
+            else
+            {
+                throw new ArgumentException(nameof(EnrollInClass), "Student is already assigned to a class");
+            }
+        }
+
+        public void RemoveFromClass(Student student)
+        {
+            if(student.StudentID == TeacherID)
+            {
+                student.StudentID = 0;
+            }
+            else
+            {
+                throw new ArgumentException(nameof(RemoveFromClass), "Student is not part of the class");
+            }
+        }
     }
 }
