@@ -19,7 +19,6 @@ namespace GradesPrototype.Data
         {
             StudentID = 0;
             UserName = string.Empty;
-            Password = string.Empty;
             TeacherID = 0;
             FirstName = string.Empty;
             LastName = string.Empty;

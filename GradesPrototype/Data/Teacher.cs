@@ -18,7 +18,6 @@ namespace GradesPrototype.Data
         {
             TeacherID = 0;
             UserName = string.Empty;
-            Password = string.Empty;
             FirstName = string.Empty;
             LastName = string.Empty;
             Class = string.Empty;
