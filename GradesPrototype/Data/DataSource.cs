@@ -19,6 +19,15 @@ namespace GradesPrototype.Data
         // Populate the collections with mock data
         public static void CreateData()
         {
+            Subjects = new List<string>()
+            {
+                "Math",
+                "English",
+                "History",
+                "Geography",
+                "Science"
+            };
+
             Teachers = new ArrayList()
             {
                 new Teacher() { TeacherID = 1, UserName = "vallee", Password = "password", FirstName = "Esther", LastName = "Valle", Class = "3C" },
@@ -108,15 +117,6 @@ namespace GradesPrototype.Data
                 new Grade() { StudentID = 15, AssessmentDate = DateTime.Now.ToString("d"), SubjectName = "English", Assessment = "B+", Comments = "OK" },
                 new Grade() { StudentID = 15, AssessmentDate = DateTime.Now.ToString("d"), SubjectName = "Geography", Assessment = "C-", Comments = "Could do better" },
                 new Grade() { StudentID = 15, AssessmentDate = DateTime.Now.ToString("d"), SubjectName = "History", Assessment = "D-", Comments = "Needs to work harder" },
-            };
-
-            Subjects = new List<string>()
-            {
-                "Math",
-                "English",
-                "History",
-                "Geography",
-                "Science"
             };
         }
         #endregion

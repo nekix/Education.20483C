@@ -23,7 +23,7 @@ namespace GradesPrototype.Data
         {
             TeacherID = 0;
             UserName = string.Empty;
-            _password = string.Empty;
+            Password = string.Empty;
             FirstName = string.Empty;
             LastName = string.Empty;
             Class = string.Empty;
@@ -33,7 +33,7 @@ namespace GradesPrototype.Data
         {
             TeacherID = teacherID;
             UserName = userName;
-            _password = password;
+            Password = password;
             FirstName = firstName;
             LastName = lastName;
             Class = className;
