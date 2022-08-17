@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
@@ -32,6 +33,16 @@ namespace GradesPrototype.Data
             TeacherID = teacherID;
             FirstName = firstName;
             LastName = lastName;
+        }
+
+        public override bool SetPassword(string password)
+        {
+            if (password.Length >= 6)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public int CompareTo(Student other)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace GradesPrototype.Data
@@ -31,6 +32,16 @@ namespace GradesPrototype.Data
             FirstName = firstName;
             LastName = lastName;
             Class = className;
+        }
+
+        public override bool SetPassword(string password)
+        {
+            if(password.Length >= 8 && Regex.Match(password, @".*[0-9]+.*[0-9]+.*").Success)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public void EnrollInClass(Student student)

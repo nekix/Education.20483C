@@ -12,7 +12,7 @@ namespace GradesPrototype.Data
         public string UserName { get; set; }
 
         // Default password generation
-        private string _password = Guid.NewGuid().ToString();
+        protected string _password = Guid.NewGuid().ToString();
         public string Password
         {
             set
