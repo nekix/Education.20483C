@@ -46,6 +46,36 @@ namespace GradesPrototype.Views
             // The MainWindow page has a handler that catches this event and returns to the Students page
             Back?.Invoke(sender, e);
         }
+
+        // Enable a teacher to remove a student from a class
+        private void Remove_Click(object sender, RoutedEventArgs e)
+        {
+            if (SessionContext.UserRole != Role.Teacher)
+            {
+                return;
+            }
+
+            try
+            {
+                if (MessageBox.Show($"Remove {SessionContext.CurrentStudent.FirstName} {SessionContext.CurrentStudent.LastName}",
+                    "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    SessionContext.CurrentTeacher.RemoveFromClass(SessionContext.CurrentStudent);
+
+                    Back?.Invoke(sender, e);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error remove a student from a class", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // TODO: Exercise 4: Task 5a: Enable a teacher to add a grade to a student
+        private void AddGrade_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
         #endregion
 
         // Display the details for the current student including the grades for the student
