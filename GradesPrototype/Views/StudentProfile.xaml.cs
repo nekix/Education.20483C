@@ -127,12 +127,16 @@ namespace GradesPrototype.Views
                                           where g.StudentID == SessionContext.CurrentStudent.StudentID
                                           select g).ToList();
 
-                    string gradeAsJson = JsonConvert.SerializeObject(grades, Formatting.Indented);
+                    string gradesAsJson = JsonConvert.SerializeObject(grades, Formatting.Indented);
+                    MessageBoxResult reply = MessageBox.Show(gradesAsJson, "Save Report?", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-                    using (StreamWriter sw = new StreamWriter(dialog.OpenFile()))
+                    if(reply == MessageBoxResult.Yes)
                     {
-                        sw.Write(gradeAsJson);
-                        //sw.BaseStream.Position = 0; 
+                        using (StreamWriter sw = new StreamWriter(dialog.OpenFile()))
+                        {
+                            sw.Write(gradesAsJson);
+                            //sw.BaseStream.Position = 0; 
+                        }
                     }
                 }       
 
