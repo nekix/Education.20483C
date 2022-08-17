@@ -28,6 +28,7 @@ namespace GradesPrototype
         {
             InitializeComponent();
             DataSource.CreateData();
+            DataSource.Students.Sort();
             GotoLogon();
         }
 
