@@ -83,6 +83,7 @@
     <Compile Include="Data\Role.cs" />
     <Compile Include="Data\Student.cs" />
     <Compile Include="Data\Teacher.cs" />
+    <Compile Include="Data\User.cs" />
     <Compile Include="Services\SessionContext.cs" />
     <Compile Include="Views\LogonPage.xaml.cs">
       <DependentUpon>LogonPage.xaml</DependentUpon>
