@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -11,6 +12,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -18,6 +20,7 @@ using GradesPrototype.Controls;
 using GradesPrototype.Data;
 using GradesPrototype.Services;
 using Microsoft.Win32;
+using Newtonsoft.Json;
 
 namespace GradesPrototype.Views
 {
@@ -121,10 +124,16 @@ namespace GradesPrototype.Views
                 {
                     // Get the grades for the currently selected student.
                     List<Grade> grades = (from g in DataSource.Grades
-                                  where g.StudentID == SessionContext.CurrentStudent.StudentID
-                                  select g).ToList();
+                                          where g.StudentID == SessionContext.CurrentStudent.StudentID
+                                          select g).ToList();
 
+                    string gradeAsJson = JsonConvert.SerializeObject(grades, Formatting.Indented);
 
+                    using (StreamWriter sw = new StreamWriter(dialog.OpenFile()))
+                    {
+                        sw.Write(gradeAsJson);
+                        //sw.BaseStream.Position = 0; 
+                    }
                 }       
 
                 
