@@ -38,6 +38,7 @@ namespace GradesPrototype.Data
         {
             if (password.Length >= 6)
             {
+                _password = password;
                 return true;
             }
 

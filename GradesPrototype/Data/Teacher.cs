@@ -37,6 +37,7 @@ namespace GradesPrototype.Data
         {
             if(password.Length >= 8 && Regex.Match(password, @".*[0-9]+.*[0-9]+.*").Success)
             {
+                _password = password;
                 return true;
             }
 
