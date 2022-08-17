@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GradesPrototype.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,8 @@ namespace GradesPrototype.Data
 {
     public class Teacher : User
     {
+        private const int MAX_CLASS_SIZE = 8;
+
         public int TeacherID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -46,6 +49,15 @@ namespace GradesPrototype.Data
 
         public void EnrollInClass(Student student)
         {
+            int numStudents = (from s in DataSource.Students
+                               where s.TeacherID == TeacherID
+                               select s).Count();
+
+            if (numStudents >= 8)
+            {
+                throw new ClassFullException("Class full: Unable to enroll student", Class);
+            }
+
             if (student.TeacherID == 0)
             {
                 student.TeacherID = TeacherID;

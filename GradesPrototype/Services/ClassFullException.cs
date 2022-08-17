@@ -18,22 +18,6 @@ namespace GradesPrototype.Services
         {
             get { return _className; }
         }
-        
-        // TODO: Exercise 3: Task 1b: Delegate functionality for the common constructors directly to the Exception class
-
-        // TODO: Exercise 3: Task 1c: Add custom constructors that populate the _className field.
-        // The code that invokes this exception is expected to provide the class name
-
-        #region Code provided to handle deserialization of a custom exception
-        // Constructor for deserializing a ClassFullException object
-        // The _className field contains custom data, so it must be handled explicitly
-        // The details are outside the scope of this lab
-        protected ClassFullException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-            // Populate the _className member from the deserialization stream 
-            _className = info.GetString("ClassName");
-        }
 
         public ClassFullException()
         {
@@ -55,6 +39,17 @@ namespace GradesPrototype.Services
         public ClassFullException(string message, string className, Exception innerException) : base(message, innerException)
         {
             _className = className;
+        }
+
+        #region Code provided to handle deserialization of a custom exception
+        // Constructor for deserializing a ClassFullException object
+        // The _className field contains custom data, so it must be handled explicitly
+        // The details are outside the scope of this lab
+        protected ClassFullException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+            // Populate the _className member from the deserialization stream 
+            _className = info.GetString("ClassName");
         }
 
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
