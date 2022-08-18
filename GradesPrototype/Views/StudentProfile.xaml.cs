@@ -102,7 +102,7 @@ namespace GradesPrototype.Views
                     SessionContext.Save();
                 }
 
-                Refresh();
+                Refresh(); 
             }
             catch (Exception ex)
             {
