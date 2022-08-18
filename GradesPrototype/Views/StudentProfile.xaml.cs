@@ -88,21 +88,21 @@ namespace GradesPrototype.Views
 
             try
             {
-                //GradeDialog dialog = new GradeDialog();
-                //if (dialog.ShowDialog().Value)
-                //{
-                //    Grade grade = new Grade(
-                //        0, dialog.assessmentDate.SelectedDate.Value.ToString("d"),
-                //        dialog.subject.SelectedValue.ToString(),
-                //        dialog.assessmentGrade.Text,
-                //        dialog.comments.Text);
+                GradeDialog gradeDialog = new GradeDialog();
+                if (gradeDialog.ShowDialog().Value)
+                {
+                    Grade grade = new Grade();
+                    grade.AssessmentDate = gradeDialog.assessmentDate.SelectedDate.Value;
+                    grade.SubjectId = gradeDialog.subject.SelectedIndex;
+                    grade.Assessment = gradeDialog.assessmentGrade.Text;
+                    grade.Comments = gradeDialog.comments.Text;
+                    grade.StudentUserId = SessionContext.CurrentStudent.UserId;
 
-                //    DataSource.Grades.Add(grade);
+                    SessionContext.DBContext.Grades.Add(grade);
+                    SessionContext.Save();
+                }
 
-                //    SessionContext.CurrentStudent.AddGrade(grade);
-
-                //    Refresh();
-                //}
+                Refresh();
             }
             catch (Exception ex)
             {
