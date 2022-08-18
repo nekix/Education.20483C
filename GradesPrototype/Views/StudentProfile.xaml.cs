@@ -279,12 +279,10 @@ namespace GradesPrototype.Views
         public object Convert(object value, Type targetType, object parameter,
                               System.Globalization.CultureInfo culture)
         {
-            // TODO: Exercise 2: Task 2a: Convert the subject ID provided in the value parameter.
+            int subjectId = (int)value;
+            var subject = SessionContext.DBContext.Subjects.FirstOrDefault(s => s.Id == subjectId);
 
-            // TODO: Exercise 2: Task 2b: Return the subject name or the string "N/A".
-
-
-            return value;
+            return subject.Name != string.Empty ? subject.Name : "N/A";
         }
 
         #region Predefined code
