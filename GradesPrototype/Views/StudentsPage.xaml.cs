@@ -13,8 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Grades.DataModel;
 using GradesPrototype.Controls;
-using GradesPrototype.Data;
 using GradesPrototype.Services;
 
 namespace GradesPrototype.Views
@@ -34,11 +34,15 @@ namespace GradesPrototype.Views
         // Display students for the current teacher
         public void Refresh()
         {
-            List<Student> students = new List<Student>((from Student st in DataSource.Students
-                                                where st.TeacherID == SessionContext.CurrentTeacher.TeacherID
-                                                select st).ToList());
+            list.Items.Clear();
 
-            list.ItemsSource = students;
+            foreach (Student student in SessionContext.DBContext.Students)
+            {
+                if (student.TeacherUserId == SessionContext.CurrentTeacher.UserId)
+                {
+                    list.Items.Add(student);
+                }
+            }
 
             txtClass.Text = $"Class {SessionContext.CurrentTeacher.Class}";
         }
@@ -79,21 +83,30 @@ namespace GradesPrototype.Views
                     newStudent.LastName = sd.lastName.Text;
 
                     //Checking the password for compliance with the requirements
-                    if (!newStudent.SetPassword(sd.password.Text))
+                    if (!newStudent.User.SetPassword(Role.Student, sd.password.Text))
                     {
                         throw new Exception("Password must be at least 6 characters long. Student not created");
                     }
-                    newStudent.Password =  sd.password.Text;
 
                     // Generate the UserName property - lastname with the initial letter of the first name all converted to lowercase
-                    newStudent.UserName = (newStudent.LastName + newStudent.FirstName.Substring(0, 1)).ToLower();
+                    newStudent.User.UserName = (newStudent.LastName + newStudent.FirstName.Substring(0, 1)).ToLower();
 
-                    // Generate a unique ID for the user: Use the maximum StudentID in the Students collection and add 1
-                    newStudent.StudentID = (from s in DataSource.Students
-                                            select s.StudentID).Max() + 1;
+                    // Generate a unique ID for the user
+                    newStudent.UserId = Guid.NewGuid();
+
+
+                    // Assign a value for the ImageName field
+                    newStudent.ImageName = "No photo";
+
+                    // Generate default values for remaining properties of user object
+                    newStudent.User.ApplicationId = (from Grades.DataModel.User u in SessionContext.DBContext.Users select u.ApplicationId).FirstOrDefault();
+                    newStudent.User.IsAnonymous = false;
+                    newStudent.User.LastActivityDate = DateTime.Now;
+                    newStudent.User.UserId = newStudent.UserId;
 
                     // Add the student to the Students collection
-                    DataSource.Students.Add(newStudent);
+                    SessionContext.DBContext.Students.Add(newStudent);
+                    SessionContext.Save();
                 }
             }
             catch (Exception ex)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using GradesPrototype.Data;
+using Grades.DataModel;
 using GradesPrototype.Services;
 
 namespace GradesPrototype.Controls
@@ -29,8 +30,9 @@ namespace GradesPrototype.Controls
         // Refresh the display of unassigned students
         private void Refresh()
         {
-            var unassignedStudents = from s in DataSource.Students
-                                          where s.TeacherID == 0
+            SessionContext.DBContext.Students.Load();
+            var unassignedStudents = from s in SessionContext.DBContext.Students.Local
+                                          where s.TeacherUserId == null
                                           select s;
 
             if(unassignedStudents.Count() == 0)
@@ -59,16 +61,19 @@ namespace GradesPrototype.Controls
             {
                 Button button = sender as Button;
 
-                int studentID = (int)button.Tag;
+                Guid studentID = (Guid)button.Tag;
 
-                var student = (from s in DataSource.Students
-                              where s.StudentID == studentID
-                              select s).FirstOrDefault();
+                var student = (from s in SessionContext.DBContext.Students
+                              where s.UserId == studentID
+                              select s).First();
 
-                string message = string.Format($"Add {student.FirstName} {student.LastName} to your class?");
-                if(MessageBox.Show(message, "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if(MessageBox.Show($"Add {student.FirstName} {student.LastName} to your class?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
+                    Guid teacherId = SessionContext.CurrentTeacher.UserId;
+
                     SessionContext.CurrentTeacher.EnrollInClass(student);
+                    SessionContext.Save();
+
                     Refresh();
                 }
             }

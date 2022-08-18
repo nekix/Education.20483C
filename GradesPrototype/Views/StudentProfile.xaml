@@ -3,8 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:app="clr-namespace:GradesPrototype.Views"
     >
+    <UserControl.Resources>
+        <app:SubjectConverter x:Key="subjectConverter" />
+    </UserControl.Resources>
     <Grid>
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
@@ -53,10 +58,13 @@
                                     <ColumnDefinition Width="200"/>
                                 </Grid.ColumnDefinitions>
 
-                                <TextBlock Grid.Column="0" Margin="5,0,5,0" Text="{Binding AssessmentDate}" HorizontalAlignment="Left" FontSize="16" VerticalAlignment="Center"  />
-                                <TextBlock Grid.Column="1" Margin="5,0,5,0" Text="{Binding SubjectName}" HorizontalAlignment="Left" FontSize="16" VerticalAlignment="Center" />
+                                <TextBlock Grid.Column="0" Margin="5,0,5,0" Text="{Binding AssessmentDate, StringFormat=d}" HorizontalAlignment="Left" FontSize="16" VerticalAlignment="Center"  />
+                                <TextBlock Grid.Column="1" Margin="5,0,5,0" Text="{Binding SubjectId, Converter={StaticResource subjectConverter}}" HorizontalAlignment="Left" FontSize="16" VerticalAlignment="Center" />
                                 <TextBlock Grid.Column="2" Margin="5,0,5,0" Text="{Binding Assessment}" HorizontalAlignment="Left" FontSize="16" VerticalAlignment="Center"  />
-                                <TextBlock Grid.Column="3" Margin="5,0,5,0" Text="{Binding Comments}" Width="175" FontSize="16" TextWrapping="Wrap" VerticalAlignment="Center"  />
+                                <TextBlock Grid.Column="2" Margin="5,0,5,0" Text="{Binding Assessment}" HorizontalAlignment="Left" FontSize="16" VerticalAlignment="Center"  />
+                                <ScrollViewer Grid.Column="3" >
+                                    <TextBlock Text="{Binding Comments}" Width="Auto" FontSize="14" TextWrapping="Wrap"  VerticalAlignment="Center" />
+                                </ScrollViewer>
                             </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -67,15 +75,12 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <Button x:Name="btnSaveReport" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="15,0,0,0" Click="SaveReport_Click">
                     <TextBlock Text="Save Report" FontSize="24"/>
                 </Button>
-                <Button x:Name="btnLoadReport" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="15,0,0,0" Click="LoadReport_Click">
-                    <TextBlock Text="Load Report" FontSize="24"/>
-                </Button>
-                <Button x:Name="btnAddGrade" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="15,0,0,0" Click="AddGrade_Click">
+
+                <Button x:Name="btnAddGrade" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="15,0,0,0" Click="AddGrade_Click">
                     <TextBlock Text="Add Grade" FontSize="24"/>
                 </Button>
             </Grid>
