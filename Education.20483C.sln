@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradesTest", "GradesTest\Gr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grades.DataModel", "Grades.DataModel\Grades.DataModel.csproj", "{68AAE8D9-2F86-4280-BC95-5E7C262F5229}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grades.Web", "Grades.Web\Grades.Web.csproj", "{87E05308-9F37-4424-B23C-D928CD86756D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grades.Web", "Grades.Web\Grades.Web.csproj", "{A5E42968-76E9-4FEC-9FC0-765C572B245D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{68AAE8D9-2F86-4280-BC95-5E7C262F5229}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68AAE8D9-2F86-4280-BC95-5E7C262F5229}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68AAE8D9-2F86-4280-BC95-5E7C262F5229}.Release|Any CPU.Build.0 = Release|Any CPU
-		{87E05308-9F37-4424-B23C-D928CD86756D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{87E05308-9F37-4424-B23C-D928CD86756D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{87E05308-9F37-4424-B23C-D928CD86756D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{87E05308-9F37-4424-B23C-D928CD86756D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5E42968-76E9-4FEC-9FC0-765C572B245D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5E42968-76E9-4FEC-9FC0-765C572B245D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5E42968-76E9-4FEC-9FC0-765C572B245D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5E42968-76E9-4FEC-9FC0-765C572B245D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
