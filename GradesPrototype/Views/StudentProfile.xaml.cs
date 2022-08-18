@@ -16,8 +16,9 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
+using Grades.DataModel;
 using GradesPrototype.Controls;
-using GradesPrototype.Data;
 using GradesPrototype.Services;
 using Microsoft.Win32;
 using Newtonsoft.Json;
@@ -66,6 +67,7 @@ namespace GradesPrototype.Views
                     "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     SessionContext.CurrentTeacher.RemoveFromClass(SessionContext.CurrentStudent);
+                    SessionContext.Save();
 
                     Back?.Invoke(sender, e);
                 }
@@ -86,21 +88,21 @@ namespace GradesPrototype.Views
 
             try
             {
-                GradeDialog dialog = new GradeDialog();
-                if (dialog.ShowDialog().Value)
-                {
-                    Grade grade = new Grade(
-                        0, dialog.assessmentDate.SelectedDate.Value.ToString("d"),
-                        dialog.subject.SelectedValue.ToString(),
-                        dialog.assessmentGrade.Text,
-                        dialog.comments.Text);
+                //GradeDialog dialog = new GradeDialog();
+                //if (dialog.ShowDialog().Value)
+                //{
+                //    Grade grade = new Grade(
+                //        0, dialog.assessmentDate.SelectedDate.Value.ToString("d"),
+                //        dialog.subject.SelectedValue.ToString(),
+                //        dialog.assessmentGrade.Text,
+                //        dialog.comments.Text);
 
-                    DataSource.Grades.Add(grade);
+                //    DataSource.Grades.Add(grade);
 
-                    SessionContext.CurrentStudent.AddGrade(grade);
+                //    SessionContext.CurrentStudent.AddGrade(grade);
 
-                    Refresh();
-                }
+                //    Refresh();
+                //}
             }
             catch (Exception ex)
             {
@@ -114,31 +116,34 @@ namespace GradesPrototype.Views
             try
             {
                 SaveFileDialog dialog = new SaveFileDialog();
-                dialog.Filter = "JSON documents|*.json";
+                dialog.Filter = "XML documents|*.xml";
+
+                // Set the default filename to Grades.txt
                 dialog.FileName = "Grades";
-                dialog.DefaultExt = ".json";
+                dialog.DefaultExt = ".xml";
 
                 // Show file dialog for get file path to save report
                 bool? result = dialog.ShowDialog();
                 if (result.HasValue && result.Value)
                 {
                     // Get the grades for the currently selected student.
-                    List<Grade> grades = (from g in DataSource.Grades
-                                          where g.StudentID == SessionContext.CurrentStudent.StudentID
-                                          select g).ToList();
+                    IEnumerable<Grade> grades = (from g in SessionContext.DBContext.Grades
+                                          where g.StudentUserId == SessionContext.CurrentStudent.UserId
+                                          select g);
 
-                    // Show JSON report and waiting confirm
-                    string gradesAsJson = JsonConvert.SerializeObject(grades, Formatting.Indented);
-                    MessageBoxResult reply = MessageBox.Show(gradesAsJson, "Save Report?", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    // Serialize the grades to a MemoryStream. 
+                    MemoryStream ms = FormatAsXMLStream(grades);
 
-                    // Save report to file
-                    if(reply == MessageBoxResult.Yes)
+                    // Preview the report data in a MessageBox and ask the user whether they wish to save the report.
+                    string formattedReportData = FormatXMLData(ms);
+                    MessageBoxResult reply = MessageBox.Show(formattedReportData, "Save Report?", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if (reply == MessageBoxResult.Yes)
                     {
-                        using (StreamWriter sw = new StreamWriter(dialog.OpenFile()))
-                        {
-                            sw.Write(gradesAsJson);
-                            //sw.BaseStream.Position = 0; 
-                        }
+                        // If the user says yes, then save the data to the file that the user specified earlier
+                        // If the file already exists it will be overwritten (the SaveFileDialog box will already have asked the user whether this is OK)
+                        FileStream file = new FileStream(dialog.FileName, FileMode.Create, FileAccess.Write);
+                        ms.CopyTo(file);
+                        file.Close();
                     }
                 }       
             }
@@ -147,25 +152,94 @@ namespace GradesPrototype.Views
                 MessageBox.Show(ex.Message, "Error Generating Report", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        #endregion
 
-        private void LoadReport_Click(object sender, RoutedEventArgs e)
+        #region Utility and Helper Methods
+
+        // Format the list of grades as an XML document and write it to a MemoryStream
+        private MemoryStream FormatAsXMLStream(IEnumerable<Grades.DataModel.Grade> grades)
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "JSON documents|*.json";
+            // Save the XML document to a MemoryStream by using an XmlWriter
+            MemoryStream ms = new MemoryStream();
+            XmlWriter writer = XmlWriter.Create(ms);
 
-            bool? result = dialog.ShowDialog();
-            if (result.HasValue && result.Value)
+            // The document root has the format <Grades Student="Eric Gruber">
+            writer.WriteStartDocument();
+            writer.WriteStartElement("Grades");
+            writer.WriteAttributeString("Student", String.Format("{0} {1}", SessionContext.CurrentStudent.FirstName, SessionContext.CurrentStudent.LastName));
+
+            // Format the grades for the student and add them as child elements of the root node
+            // Grade elements have the format <Grade Date="01/01/2012" Subject="Math" Assessment="A-" Comments="Good" />
+            foreach (Grades.DataModel.Grade grade in grades)
             {
-                using (StreamReader sw = new StreamReader(dialog.OpenFile()))
-                {
-                    string gradesAsJson = sw.ReadToEnd();
-
-                    List<Grade> gradesList = JsonConvert.DeserializeObject<List<Grade>>(gradesAsJson);
-
-                    studentGrades.ItemsSource = gradesList;
-                }
-
+                writer.WriteStartElement("Grade");
+                writer.WriteAttributeString("Date", grade.AssessmentDate.ToString());
+                writer.WriteAttributeString("Subject", grade.Subject.Name);
+                writer.WriteAttributeString("Assessment", grade.Assessment);
+                writer.WriteAttributeString("Comments", grade.Comments);
+                writer.WriteEndElement();
             }
+
+            // Finish the XML document with the appropriate end elements
+            writer.WriteEndElement();
+            writer.WriteEndDocument();
+
+            // Flush the XmlWriter and close it to ensure that all the data is written to the MemoryStream
+            writer.Flush();
+            writer.Close();
+
+            // The MemoryStream now contains the formatted data
+            // Reset the MemoryStream so it can be read from the start and then return it
+            ms.Seek(0, SeekOrigin.Begin);
+            return ms;
+        }
+
+        // Format the XML data in the stream as a neatly constructed string
+        private string FormatXMLData(Stream stream)
+        {
+            // Use a StringBuilder to construct the string
+            StringBuilder builder = new StringBuilder();
+
+            // Use an XmlTextReader to read the XML data from the stream
+            XmlTextReader reader = new XmlTextReader(stream);
+
+            // Read and process the XML data a node at a time
+            while (reader.Read())
+            {
+                switch (reader.NodeType)
+                {
+                    case XmlNodeType.XmlDeclaration:
+                        // The node is an XML declaration such as <?xml version='1.0'>
+                        builder.Append(String.Format("<?{0} {1}>\n", reader.Name, reader.Value));
+                        break;
+
+                    case XmlNodeType.Element:
+                        // The node is an element (enclosed between '<' and '/>')
+                        builder.Append(String.Format("<{0}", reader.Name));
+                        if (reader.HasAttributes)
+                        {
+                            // Output each of the attributes of the element in the form "name='value'"
+                            while (reader.MoveToNextAttribute())
+                            {
+                                builder.Append(String.Format(" {0}='{1}'", reader.Name, reader.Value));
+                            }
+                        }
+                        builder.Append(">\n");
+                        break;
+
+                    case XmlNodeType.EndElement:
+                        // The node is the closing tag at the end of an element
+                        builder.Append(String.Format("</{0}>", reader.Name));
+                        break;
+
+                }
+            }
+
+            // Reset the stream
+            stream.Seek(0, SeekOrigin.Begin);
+
+            // Return the string containing the formatted data
+            return builder.ToString();
         }
         #endregion
 
@@ -190,11 +264,37 @@ namespace GradesPrototype.Views
             }
 
             // Find and display all the grades for the student in the studentGrades ItemsControl
-            List<Grade> grades = new List<Grade> ((from Grade g in DataSource.Grades
-                                               where g.StudentID == SessionContext.CurrentStudent.StudentID
-                                               select g).ToList());
+            List<Grade> grades = new List<Grade>((from Grade g in SessionContext.DBContext.Grades
+                                                  where g.StudentUserId == SessionContext.CurrentStudent.UserId
+                                                  select g).ToList());
 
             studentGrades.ItemsSource = grades;
         }
+    }
+
+    // Value converter that converts the integer subject id into the string subject name, for display purposes
+    [ValueConversion(typeof(string), typeof(int))]
+    class SubjectConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter,
+                              System.Globalization.CultureInfo culture)
+        {
+            // TODO: Exercise 2: Task 2a: Convert the subject ID provided in the value parameter.
+
+            // TODO: Exercise 2: Task 2b: Return the subject name or the string "N/A".
+
+
+            return value;
+        }
+
+        #region Predefined code
+
+        public object ConvertBack(object value, Type targetType, object parameter,
+                                  System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

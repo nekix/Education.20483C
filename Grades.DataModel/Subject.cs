@@ -12,16 +12,18 @@ namespace Grades.DataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Grades
+    public partial class Subject
     {
-        public int Id { get; set; }
-        public string Assessment { get; set; }
-        public string Comments { get; set; }
-        public System.DateTime AssessmentDate { get; set; }
-        public int SubjectId { get; set; }
-        public System.Guid StudentUserId { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Subject()
+        {
+            this.Grades = new HashSet<Grade>();
+        }
     
-        public virtual Students Students { get; set; }
-        public virtual Subjects Subjects { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Grade> Grades { get; set; }
     }
 }

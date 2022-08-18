@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using GradesPrototype.Data;
+using Grades.DataModel;
 using GradesPrototype.Services;
 
 namespace GradesPrototype.Views
@@ -39,17 +39,17 @@ namespace GradesPrototype.Views
         private void Logon_Click(object sender, RoutedEventArgs e)
         {
             //Check teacher account
-            var teacher = (from Teacher t in DataSource.Teachers
-                          where string.Compare(t.UserName, username.Text) == 0
-                          where t.VerifyPassword(password.Password)
+            var teacher = (from Teacher t in SessionContext.DBContext.Teachers
+                          where t.User.UserName == username.Text
+                          where t.User.UserPassword == password.Password
                           select t).FirstOrDefault();
 
             //Set teacher to session context
-            if (!(teacher is default(Teacher)))
+            if (!(teacher is default(Teacher)) && !string.IsNullOrEmpty(teacher.User.UserName))
             {
-                SessionContext.UserID = teacher.TeacherID;
+                SessionContext.UserID = teacher.UserId;
                 SessionContext.UserRole = Role.Teacher;
-                SessionContext.UserName = teacher.UserName;
+                SessionContext.UserName = teacher.User.UserName;
                 SessionContext.CurrentTeacher = teacher;
 
                 LogonSuccess?.Invoke(this, null);
@@ -57,17 +57,17 @@ namespace GradesPrototype.Views
             }
 
             //Check student account
-            var student = (from Student s in DataSource.Students
-                           where string.Compare(s.UserName, username.Text) == 0
-                           where s.VerifyPassword(password.Password)
+            var student = (from Student s in SessionContext.DBContext.Students
+                           where s.User.UserName == username.Text
+                           where s.User.UserPassword == password.Password
                            select s).FirstOrDefault();
 
             //Set student to session context
-            if (!(student is default(Student)))
+            if (!(student is default(Student)) && !string.IsNullOrEmpty(teacher.User.UserName))
             {
-                SessionContext.UserID = student.StudentID;
+                SessionContext.UserID = student.User.UserId;
                 SessionContext.UserRole = Role.Student;
-                SessionContext.UserName = student.UserName;
+                SessionContext.UserName = student.User.UserName;
                 SessionContext.CurrentStudent = student;
 
                 LogonSuccess?.Invoke(this, null);

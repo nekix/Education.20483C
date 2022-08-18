@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Grades.DataModel;
+using GradesPrototype.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +13,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using GradesPrototype.Data;
 
 namespace GradesPrototype.Controls
 {
@@ -28,7 +29,10 @@ namespace GradesPrototype.Controls
         private void GradeDialog_Loaded(object sender, RoutedEventArgs e)
         {
             // Display the list of available subjects in the subject ListBox
-            subject.ItemsSource = DataSource.Subjects;
+            foreach (Subject subj in SessionContext.DBContext.Subjects)
+            {
+                subject.Items.Add(subj.Name);
+            }
 
             // Set default values for the assessment date and subject
             assessmentDate.SelectedDate = DateTime.Now;
@@ -42,7 +46,7 @@ namespace GradesPrototype.Controls
             // Create a Grade object using the details provided, and trap and report any exceptions that are thrown
             try
             {
-                Grade testGrade = new Grade(0, assessmentDate.SelectedDate.Value.ToString("d"), subject.SelectedValue.ToString(), assessmentGrade.Text, comments.Text);
+                //Grade testGrade = new Grade(0, assessmentDate.SelectedDate.Value.ToString("d"), subject.SelectedValue.ToString(), assessmentGrade.Text, comments.Text);
             }
             catch (Exception ex)
             {

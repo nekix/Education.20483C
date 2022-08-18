@@ -22,7 +22,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="8">
-                            <Button Height="150" Width="127.5" Click="Student_Click" Tag="{Binding StudentID}">
+                            <Button Height="150" Width="127.5" Click="Student_Click" Tag="{Binding User.UserId}">
                                 <StackPanel>
                                     <TextBlock Text="{Binding FirstName}" FontSize="16" />
                                     <TextBlock Text="{Binding LastName}" FontSize="16"  />

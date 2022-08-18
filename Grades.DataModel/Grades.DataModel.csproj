@@ -50,8 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="Grades.cs">
+    <Compile Include="Classes.cs" />
+    <Compile Include="Grade.cs">
       <DependentUpon>GradesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="GradesModel.Context.cs">
@@ -70,46 +70,44 @@
       <DependentUpon>GradesModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Students.cs">
+    <Compile Include="Student.cs">
       <DependentUpon>GradesModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Subjects.cs">
+    <Compile Include="Subject.cs">
       <DependentUpon>GradesModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Teachers.cs">
+    <Compile Include="Teacher.cs">
       <DependentUpon>GradesModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Users.cs">
+    <Compile Include="User.cs">
       <DependentUpon>GradesModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
     <EntityDeploy Include="GradesModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>GradesModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config" />
     <None Include="GradesModel.edmx.diagram">
       <DependentUpon>GradesModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="GradesModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>GradesModel.Context.cs</LastGenOutput>
       <DependentUpon>GradesModel.edmx</DependentUpon>
+      <LastGenOutput>GradesModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="GradesModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>GradesModel.edmx</DependentUpon>
       <LastGenOutput>GradesModel.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

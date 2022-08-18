@@ -12,12 +12,12 @@ namespace Grades.DataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Teachers
+    public partial class Teacher
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Teachers()
+        public Teacher()
         {
-            this.Students = new HashSet<Students>();
+            this.Students = new HashSet<Student>();
         }
     
         public System.Guid UserId { get; set; }
@@ -26,7 +26,7 @@ namespace Grades.DataModel
         public string Class { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Students> Students { get; set; }
-        public virtual Users Users { get; set; }
+        public virtual ICollection<Student> Students { get; set; }
+        public virtual User User { get; set; }
     }
 }

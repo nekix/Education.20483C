@@ -13,8 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Grades.DataModel;
 using GradesPrototype.Controls;
-using GradesPrototype.Data;
 using GradesPrototype.Services;
 using GradesPrototype.Views;
 
@@ -28,8 +28,6 @@ namespace GradesPrototype
         public MainWindow()
         {
             InitializeComponent(); 
-            DataSource.CreateData();
-            DataSource.Students.Sort();
             GotoLogon();
         }
 
