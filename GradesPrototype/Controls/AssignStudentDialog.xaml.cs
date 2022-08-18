@@ -71,7 +71,9 @@ namespace GradesPrototype.Controls
                 {
                     Guid teacherId = SessionContext.CurrentTeacher.UserId;
 
-                    //SessionContext.CurrentTeacher.EnrollInClass(student);
+                    SessionContext.CurrentTeacher.EnrollInClass(student);
+                    SessionContext.Save();
+
                     Refresh();
                 }
             }
