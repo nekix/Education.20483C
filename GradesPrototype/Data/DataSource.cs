@@ -17,7 +17,7 @@ namespace GradesPrototype.Data
 
         #region Sample Data
         // Populate the collections with mock data
-        public static void CreateData()
+        public static void CreateData() 
         {
             Subjects = new List<string>()
             {
