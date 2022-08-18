@@ -50,7 +50,7 @@ namespace GradesPrototype.Controls
                 
                 grade.ValidateAssessmentDate(assessmentDate.SelectedDate.Value);
                 grade.ValidateAssessmentGrade(assessmentGrade.Text);
-            }
+            } 
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error creating assessment", MessageBoxButton.OK, MessageBoxImage.Error);
