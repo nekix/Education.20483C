@@ -46,7 +46,10 @@ namespace GradesPrototype.Controls
             // Create a Grade object using the details provided, and trap and report any exceptions that are thrown
             try
             {
-                //Grade testGrade = new Grade(0, assessmentDate.SelectedDate.Value.ToString("d"), subject.SelectedValue.ToString(), assessmentGrade.Text, comments.Text);
+                Grade grade = new Grade();
+                
+                grade.ValidateAssessmentDate(assessmentDate.SelectedDate.Value);
+                grade.ValidateAssessmentGrade(assessmentGrade.Text);
             }
             catch (Exception ex)
             {
