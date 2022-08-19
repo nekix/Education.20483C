@@ -14,7 +14,7 @@ using Grades.DataModel;
 
 namespace Grades.Web.Services
 {
-    public class GradesWebDataService : DataService<SchoolGradesDBEntities>
+    public class GradesWebDataService : DataService<Entities>
     {
         // This method is called only once to initialize service-wide policies.
         public static void InitializeService(DataServiceConfiguration config)
@@ -24,11 +24,14 @@ namespace Grades.Web.Services
             config.SetServiceOperationAccessRule("StudentsInClass", ServiceOperationRights.AllRead);
 
             // Configure all entity sets to permit read and write access
+            config.SetEntitySetAccessRule("*", EntitySetRights.All);
+            /*
             config.SetEntitySetAccessRule("Grades", EntitySetRights.All);
             config.SetEntitySetAccessRule("Teachers", EntitySetRights.All);
             config.SetEntitySetAccessRule("Students", EntitySetRights.All);
             config.SetEntitySetAccessRule("Subjects", EntitySetRights.All);
             config.SetEntitySetAccessRule("Users", EntitySetRights.All);
+            */
 
             // Examples:
             // config.SetEntitySetAccessRule("MyEntityset", EntitySetRights.AllRead);

@@ -281,7 +281,7 @@ namespace GradesPrototype.Views
                               System.Globalization.CultureInfo culture)
         {
             int subjectId = (int)value;
-            var subject = SessionContext.DBContext.Subjects.FirstOrDefault(s => s.Id == subjectId);
+            var subject = SessionContext.DBContext.Subjects.Where(s => s.Id == subjectId).FirstOrDefault();
 
             return subject.Name != string.Empty ? subject.Name : "N/A";
         }
