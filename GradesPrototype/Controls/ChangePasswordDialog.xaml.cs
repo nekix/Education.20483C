@@ -63,6 +63,7 @@ namespace GradesPrototype.Controls
                 return;
             }
 
+            SessionContext.DBContext.UpdateObject(user);
             SessionContext.Save();
             
             // Indicate that the data is valid

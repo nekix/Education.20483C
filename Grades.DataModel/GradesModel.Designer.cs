@@ -1,4 +1,4 @@
-﻿// Создание кода T4 для модели "E:\Documents\Education\C#\15.08.2022\20483C\Project\Education.20483C\Grades.DataModel\GradesModel.edmx" включено. 
+﻿// Создание кода T4 для модели "E:\Development\Education\Project\Education.20483C\Grades.DataModel\GradesModel.edmx" включено. 
 // Чтобы включить формирование кода прежних версий, измените значение свойства "Стратегия создания кода" конструктора
 // на "Legacy ObjectContext". Это свойство доступно в окне "Свойства", если модель
 // открыта в конструкторе.

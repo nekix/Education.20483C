@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ using System.Windows.Shapes;
 using Grades.DataModel;
 using GradesPrototype.Controls;
 using GradesPrototype.Services;
+using static System.Net.WebRequestMethods;
 
 namespace GradesPrototype.Views
 {
@@ -36,10 +38,14 @@ namespace GradesPrototype.Views
         {
             list.Items.Clear();
 
+
             foreach (Student student in SessionContext.DBContext.Students)
             {
                 if (student.TeacherUserId == SessionContext.CurrentTeacher.UserId)
                 {
+                    SessionContext.DBContext.LoadProperty(student, "User");
+                    SessionContext.DBContext.LoadProperty(student, "Grades");
+
                     list.Items.Add(student);
                 }
             }
@@ -105,7 +111,7 @@ namespace GradesPrototype.Views
                     newStudent.User.UserId = newStudent.UserId;
 
                     // Add the student to the Students collection
-                    SessionContext.DBContext.Students.Add(newStudent);
+                    SessionContext.DBContext.AddToStudents(newStudent);
                     SessionContext.Save();
                 }
             }
@@ -134,6 +140,28 @@ namespace GradesPrototype.Views
         public StudentEventArgs(Student s)
         {
             Child = s;
+        }
+    }
+
+    public class ImageNameConverter : IValueConverter
+    {
+        const string webFolder = @"http://localhost:1655/Images/Portraits/";
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is string str)
+            {
+                return $"{webFolder}{str}";
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 }

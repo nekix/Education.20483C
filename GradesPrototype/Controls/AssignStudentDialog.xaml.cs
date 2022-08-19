@@ -31,7 +31,7 @@ namespace GradesPrototype.Controls
         private void Refresh()
         {
             SessionContext.DBContext.Students.Load();
-            var unassignedStudents = from s in SessionContext.DBContext.Students.Local
+            var unassignedStudents = from s in SessionContext.DBContext.Students.Expand("User, Grades")
                                           where s.TeacherUserId == null
                                           select s;
 
@@ -72,6 +72,7 @@ namespace GradesPrototype.Controls
                     Guid teacherId = SessionContext.CurrentTeacher.UserId;
 
                     SessionContext.CurrentTeacher.EnrollInClass(student);
+                    SessionContext.DBContext.UpdateObject(student);
                     SessionContext.Save();
 
                     Refresh();
