@@ -81,6 +81,37 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\Portraits\j0262967.jpg" />
+    <Content Include="Images\Portraits\j0399784.jpg" />
+    <Content Include="Images\Portraits\j0403660.jpg" />
+    <Content Include="Images\Portraits\j0409043.jpg" />
+    <Content Include="Images\Portraits\j0409369.jpg" />
+    <Content Include="Images\Portraits\j0409711.jpg" />
+    <Content Include="Images\Portraits\j0409726.jpg" />
+    <Content Include="Images\Portraits\j0410095.jpg" />
+    <Content Include="Images\Portraits\j0411707.jpg" />
+    <Content Include="Images\Portraits\j0411711.jpg" />
+    <Content Include="Images\Portraits\j0422528.jpg" />
+    <Content Include="Images\Portraits\j0426562.jpg" />
+    <Content Include="Images\Portraits\j0439290.jpg" />
+    <Content Include="Images\Portraits\j0439294.jpg" />
+    <Content Include="Images\Portraits\j0439330.jpg" />
+    <Content Include="Images\Portraits\j0439331.jpg" />
+    <Content Include="Images\Portraits\j0439332.jpg" />
+    <Content Include="Images\Portraits\j0439336.jpg" />
+    <Content Include="Images\Portraits\j0439337.jpg" />
+    <Content Include="Images\Portraits\j0439406.jpg" />
+    <Content Include="Images\Portraits\j0439416.jpg" />
+    <Content Include="Images\Portraits\j0439427.jpg" />
+    <Content Include="Images\Portraits\j0439482.jpg" />
+    <Content Include="Images\Portraits\j0439508.jpg" />
+    <Content Include="Images\Portraits\j0439525.jpg" />
+    <Content Include="Images\Portraits\j0439552.jpg" />
+    <Content Include="Images\Portraits\j0439565.jpg" />
+    <Content Include="Images\Portraits\j0442243.jpg" />
+    <Content Include="Images\Portraits\j0442319.jpg" />
+    <Content Include="Images\Portraits\j0442459.jpg" />
+    <Content Include="Images\Portraits\j0446466.jpg" />
     <Content Include="Services\GradesWebDataService.svc" />
     <Content Include="Web.config" />
     <Content Include="WebForm1.aspx" />

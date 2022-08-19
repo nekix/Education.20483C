@@ -145,7 +145,7 @@ namespace GradesPrototype.Views
 
     public class ImageNameConverter : IValueConverter
     {
-        const string webFolder = @"http://localhost:1650/Images/Portraits/";
+        const string webFolder = @"http://localhost:1655/Images/Portraits/";
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
