@@ -67,6 +67,7 @@ namespace GradesPrototype.Views
                     "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     SessionContext.CurrentTeacher.RemoveFromClass(SessionContext.CurrentStudent);
+                    SessionContext.DBContext.UpdateObject(SessionContext.CurrentStudent);
                     SessionContext.Save();
 
                     Back?.Invoke(sender, e);
