@@ -4,8 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:app="clr-namespace:GradesPrototype.Views"
+             xmlns:local="clr-namespace:GradesPrototype.Views"
     >
     <UserControl.Resources>
+        <local:ImageNameConverter x:Key="ImageNameConverter"/>
         <app:SubjectConverter x:Key="subjectConverter" />
     </UserControl.Resources>
     <Grid>
@@ -28,6 +30,7 @@
             </Button>
 
             <StackPanel x:Name="studentName" Grid.Row="1" Margin="30" Height="250" Width="235" >
+                <Image Height="150" Source="{Binding ImageName, Converter={StaticResource ImageNameConverter}}"/>
                 <TextBlock x:Name="firstName" FontSize="16" Text="{Binding FirstName}"/>
                 <TextBlock x:Name="lastName" FontSize="16"  Text="{Binding LastName}"/>
             </StackPanel>
