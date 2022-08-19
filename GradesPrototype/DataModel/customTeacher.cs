@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GradesPrototype.Services;
 
 namespace Grades.DataModel
 {
@@ -14,7 +15,7 @@ namespace Grades.DataModel
         {
             // Verify that this teacher's class is not already full.
             // Determine how many students are currently in the class.
-            int numStudents = (from s in Students
+            int numStudents = (from s in SessionContext.DBContext.Students
                                where s.TeacherUserId == UserId
                                select s).Count();
 

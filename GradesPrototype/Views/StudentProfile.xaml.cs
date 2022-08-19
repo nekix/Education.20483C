@@ -98,7 +98,7 @@ namespace GradesPrototype.Views
                     grade.Comments = gradeDialog.comments.Text;
                     grade.StudentUserId = SessionContext.CurrentStudent.UserId;
 
-                    SessionContext.DBContext.Grades.Add(grade);
+                    SessionContext.DBContext.AddToGrades(grade);
                     SessionContext.Save();
                 }
 
@@ -127,7 +127,7 @@ namespace GradesPrototype.Views
                 if (result.HasValue && result.Value)
                 {
                     // Get the grades for the currently selected student.
-                    IEnumerable<Grade> grades = (from g in SessionContext.DBContext.Grades
+                    IEnumerable<Grade> grades = (from g in SessionContext.DBContext.Grades.Expand("Subject")
                                           where g.StudentUserId == SessionContext.CurrentStudent.UserId
                                           select g);
 

@@ -36,10 +36,14 @@ namespace GradesPrototype.Views
         {
             list.Items.Clear();
 
+
             foreach (Student student in SessionContext.DBContext.Students)
             {
                 if (student.TeacherUserId == SessionContext.CurrentTeacher.UserId)
                 {
+                    SessionContext.DBContext.LoadProperty(student, "User");
+                    SessionContext.DBContext.LoadProperty(student, "Grades");
+
                     list.Items.Add(student);
                 }
             }
@@ -105,7 +109,7 @@ namespace GradesPrototype.Views
                     newStudent.User.UserId = newStudent.UserId;
 
                     // Add the student to the Students collection
-                    SessionContext.DBContext.Students.Add(newStudent);
+                    SessionContext.DBContext.AddToStudents(newStudent);
                     SessionContext.Save();
                 }
             }

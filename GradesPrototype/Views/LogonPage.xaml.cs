@@ -39,7 +39,7 @@ namespace GradesPrototype.Views
         private void Logon_Click(object sender, RoutedEventArgs e)
         {
             //Check teacher account
-            var teacher = (from Teacher t in SessionContext.DBContext.Teachers
+            var teacher = (from Teacher t in SessionContext.DBContext.Teachers.Expand("User, Students")
                           where t.User.UserName == username.Text
                           where t.User.UserPassword == password.Password
                           select t).FirstOrDefault();
@@ -57,7 +57,7 @@ namespace GradesPrototype.Views
             }
 
             //Check student account
-            var student = (from Student s in SessionContext.DBContext.Students
+            var student = (from Student s in SessionContext.DBContext.Students.Expand("User, Grades")
                            where s.User.UserName == username.Text
                            where s.User.UserPassword == password.Password
                            select s).FirstOrDefault();
