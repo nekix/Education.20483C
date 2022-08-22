@@ -109,7 +109,6 @@ namespace Grades.WPF
             Refresh();
         }
 
-        // TODO: Exercise 1: Task 4d: Review the following event handler.
         // Remove the student from the class if the user clicks the remove icon
         private void RemoveStudent_Click(object sender, MouseButtonEventArgs e)
         {
@@ -122,6 +121,18 @@ namespace Grades.WPF
                 utils.RemoveStudent(SessionContext.CurrentTeacher, student.Record);
                 Refresh();
             }
+        }
+
+        private void Student_MouseEnter(object sender, MouseEventArgs e)
+        {
+            // Call the OnMouseEnter event handler on the specific photograph currently under the mouse pointer
+            ((StudentPhoto)sender).OnMouseEnter();
+        }
+
+        private void Student_MouseLeave(object sender, MouseEventArgs e)
+        {
+            // Call the OnMouseLeave event handler on the specific photograph currently under the mouse pointer
+            ((StudentPhoto)sender).OnMouseLeave();
         }
         #endregion
 

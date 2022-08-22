@@ -26,7 +26,10 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="8">
-                            <local:StudentPhoto Height="150" Width="127.5" Cursor="Hand" MouseLeftButtonUp="Student_Click"/>
+                            <local:StudentPhoto Height="150" Width="127.5" Cursor="Hand"
+                                                MouseEnter="Student_MouseEnter"
+                                                MouseLeave="Student_MouseLeave"
+                                                MouseLeftButtonUp="Student_Click"/>
                             <Grid VerticalAlignment="Top"
                                   HorizontalAlignment="Right"
                                   Background="#00000000"
