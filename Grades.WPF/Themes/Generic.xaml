@@ -652,7 +652,13 @@
     </Style>
 
     <!--  Text Controls  -->
-    <Style x:Key="LabelStyle" TargetType="{x:Type TextBlock}" />
+    <Style x:Key="LabelStyle" TargetType="{x:Type TextBlock}" >
+        <Setter Property="TextWrapping" Value="NoWrap"/>
+        <Setter Property="FontFamily" Value="Buxton Sketch"/>
+        <Setter Property="FontSize" Value="19"/>
+        <Setter Property="Foreground" Value="#FF303030" />
+    </Style>
+    
     <Style
         x:Key="LabelRight"
         BasedOn="{StaticResource LabelStyle}"
@@ -680,6 +686,11 @@
     </Style>
 
     <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}">
+        <Setter Property="TextWrapping" Value="NoWrap"/>
+        <Setter Property="FontFamily" Value="Buxton Sketch"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="TextAlignment" Value="Left" />
+        <Setter Property="Foreground" Value="#FF303030" />
 
         <Style.Triggers>
             <Trigger Property="Validation.HasError" Value="true">
