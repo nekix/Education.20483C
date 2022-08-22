@@ -10,40 +10,32 @@ using System.Data.Services.Common;
 using System.Linq;
 using System.ServiceModel.Web;
 using System.Web;
-using Grades.DataModel;
+using Grades.Web.Models;
 
 namespace Grades.Web.Services
 {
-    public class GradesWebDataService : DataService<Entities>
+    public class GradesWebDataService : DataService<Models.GradesEntities>
     {
         // This method is called only once to initialize service-wide policies.
         public static void InitializeService(DataServiceConfiguration config)
         {
-            // TODO: set rules to indicate which entity sets and service operations are visible, updatable, etc.
-            // Configure the StudentsInClass operation as read-only.
-            config.SetServiceOperationAccessRule("StudentsInClass", ServiceOperationRights.AllRead);
-
-            // Configure all entity sets to permit read and write access
-            config.SetEntitySetAccessRule("*", EntitySetRights.All);
-            /*
             config.SetEntitySetAccessRule("Grades", EntitySetRights.All);
             config.SetEntitySetAccessRule("Teachers", EntitySetRights.All);
+            config.SetEntitySetAccessRule("Parents", EntitySetRights.All);
             config.SetEntitySetAccessRule("Students", EntitySetRights.All);
             config.SetEntitySetAccessRule("Subjects", EntitySetRights.All);
             config.SetEntitySetAccessRule("Users", EntitySetRights.All);
-            */
 
-            // Examples:
-            // config.SetEntitySetAccessRule("MyEntityset", EntitySetRights.AllRead);
-            // config.SetServiceOperationAccessRule("MyServiceOperation", ServiceOperationRights.All);
-            config.DataServiceBehavior.MaxProtocolVersion = DataServiceProtocolVersion.V3;
+            config.SetServiceOperationAccessRule("StudentsForParent", ServiceOperationRights.All);
+
+            config.DataServiceBehavior.MaxProtocolVersion = DataServiceProtocolVersion.V2;
         }
 
         [WebGet]
-        public IEnumerable<Student> StudentsInClass(string className)
+        public IEnumerable<Student> StudentsForParent(string parentName)
         {
             var students = from Student s in this.CurrentDataSource.Students
-                           where String.Equals(s.Teacher.Class, className)
+                           where s.Parents.Any(p => p.User.UserName == parentName)
                            select s;
             return students;
         }
