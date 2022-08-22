@@ -27,7 +27,7 @@
                     <DataTemplate>
                         <Grid Margin="8">
                             <local:StudentPhoto Height="150" Width="127.5" Cursor="Hand"
-                                                MouseEnter="Student_MouseEnter"
+                                                MouseEnter="Student_MouseEnter" 
                                                 MouseLeave="Student_MouseLeave"
                                                 MouseLeftButtonUp="Student_Click"/>
                             <Grid VerticalAlignment="Top"
