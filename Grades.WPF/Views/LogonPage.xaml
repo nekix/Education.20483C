@@ -5,6 +5,18 @@
       xmlns:local="clr-namespace:Grades.WPF"
       KeyDown="UserControl_KeyUp"             
       >
+    <UserControl.Resources>
+        <Style x:Key="LoginTextBoxStyle" BasedOn="{StaticResource TextBoxStyle}" TargetType="{x:Type TextBox}">
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="MaxLength" Value="16" />
+        </Style>
+        <Style x:Key="PasswordBoxStyle" TargetType="{x:Type PasswordBox}">
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="MaxLength" Value="16" />
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
             <Grid Margin="25" x:Name="logonForm">
@@ -23,11 +35,11 @@
 
                 <TextBlock Grid.Row="1" Style="{StaticResource LabelStyle}" FontSize="24" Text="Username: " />
 
-                <TextBox x:Name="username" Grid.Row="1" Grid.Column="1" FontSize="24" />
+                <TextBox x:Name="username" Grid.Row="1" Grid.Column="1" FontSize="24" Style="{StaticResource LoginTextBoxStyle}"/>
 
                 <TextBlock Grid.Row="2" Style="{StaticResource LabelStyle}" FontSize="24" Text="Password: " />
-                
-                <PasswordBox x:Name="password" Grid.Row="2" Grid.Column="1"  FontSize="24" />
+
+                <PasswordBox x:Name="password" Grid.Row="2" Grid.Column="1"  FontSize="24" Style="{StaticResource PasswordBoxStyle}"/>
 
                 <local:GrungeButton Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Click="Logon_Click">
                     <TextBlock Style="{StaticResource LabelStyle}" Text="Log on" />
