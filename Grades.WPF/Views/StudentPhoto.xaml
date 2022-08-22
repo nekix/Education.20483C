@@ -6,6 +6,36 @@
              xmlns:local="clr-namespace:Grades.WPF"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.RenderTransform>
+        <ScaleTransform x:Name="scale" />
+    </UserControl.RenderTransform>
+    <UserControl.Resources>
+        <Storyboard x:Key="sbMouseEnter">
+            <DoubleAnimation To="1.1"
+                             BeginTime="00:00:00"
+                             Duration="00:00:00.05"
+                             Storyboard.TargetName="scale"
+                             Storyboard.TargetProperty="ScaleX" />
+            <DoubleAnimation To="1.1"
+                             BeginTime="00:00:00"
+                             Duration="00:00:00.15"
+                             Storyboard.TargetName="scale"
+                             Storyboard.TargetProperty="ScaleY" />
+        </Storyboard>
+        <Storyboard x:Key="sbMouseLeave">
+            <DoubleAnimation To="1"
+                             BeginTime="00:00:00"
+                             Duration="00:00:00.05"
+                             Storyboard.TargetName="scale"
+                             Storyboard.TargetProperty="ScaleX" />
+            <DoubleAnimation To="1"
+                             BeginTime="00:00:00"
+                             Duration="00:00:00.15"
+                             Storyboard.TargetName="scale"
+                             Storyboard.TargetProperty="ScaleY" />
+        </Storyboard>
+    </UserControl.Resources>
+    
     <Grid>
         <Image Stretch="UniformToFill" Source="{Binding File}" Margin="8"  />
         <Image Margin="0" Source="../Images/Image_Frame.png" Stretch="Fill" />
